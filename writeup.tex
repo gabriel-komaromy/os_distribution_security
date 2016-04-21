@@ -92,7 +92,7 @@
 
 % *** CITATION PACKAGES ***
 %
-%\usepackage{cite}
+\usepackage{cite}
 % cite.sty was written by Donald Arseneau
 % V1.6 and later of IEEEtran pre-defines the format of the cite.sty package
 % \cite{} output to follow that of the IEEE. Loading the cite package will
@@ -249,7 +249,7 @@
 
 % *** PDF, URL AND HYPERLINK PACKAGES ***
 %
-%\usepackage{url}
+\usepackage{url}
 % url.sty was written by Donald Arseneau. It provides better support for
 % handling and breaking URLs. url.sty is already installed on most LaTeX
 % systems. The latest version and documentation can be obtained at:
@@ -352,27 +352,26 @@ The abstract goes here.
 
 \section{Introduction}
 
-An operating system is a software that manages computer hardware resources
+An operating system is a piece of software that manages computer hardware resources
 and provides a variety of services for computer programs.
 The central core of an operating system, its kernel, is the first layer
 above hardware itself. Due to of the depth of their functionality,
-operating systems can potentially yield a great deal more power
-to an attacker, if the system is compromised, than application software can.
-Operating systems can be compromised by malicious computer software,
-such as rootkits, following normal operation, although attacks can sometimes
-be launched more easily against the distribution process itself, in such a way
+compromised operating systems can potentially yield a great deal more power
+to an attacker than application software.\\
+\indent Operating systems can be compromised by malicious computer software,
+such as rootkits, in the course of normal operation. However, attacks can sometimes
+be launched more easily against the distribution process itself. This can be done in such a way
 that users unknowingly install a modified version of the expected operating
-system. If uncaught, attacks that result in the distribution of a compromised
-operating system can be both exceedingly difficult to detect and exceedingly
-powerful in their effect.
-The open-source model possesses some unique
-vulerabilities compared to its closed- or shared-source counterparts.
+system. If successful, attacks that result in the distribution of a compromised
+operating system can be both difficult to detect and
+powerful.\\
+\indent The open-source software model possesses a somewhat different attack surface that its closed- or shared-source counterparts.
 Open-source operating systems often have much smaller core development teams
-than do the popular Windows and OS X systems. Open-source software is not
-always available on physical media, unlike for example, Windows, which is
-commonly installed from disc. The storefront websites that are requisite for
-online distribution of proprietary software also provide a significant barrier that
-attackers targeting free software would not have to overcome.
+than popular commercial systems such as Windows and OS X. Open-source operating systems are rarely distributed using
+physical media, which is the primary distribution mechanism for Windows.
+The commercial interfaces that are requisite for online distribution of proprietary
+software also have advantages and disadvantages in security that
+are different from the security considerations that open-source distributors must account for.
 
 \ldots\textit{Add more here}\ldots
 
@@ -506,7 +505,23 @@ Body of text goes here\ldots
 
 \subsubsection{SourceForge}
 
-Body of text goes here\ldots
+SourceForge is a hosting service for open-source software. In 2015, the
+website was accused of bundling malware with the binary project packages
+that it offered for users to download. This caused some large projects to
+abandon the site entirely~\cite{GIMPSourceForge}. While the company later
+announced a change to this policy~\cite{SourceForgePolicy}, accusations
+have continued~\cite{NmapSourceForge} and SourceForge can no longer be considered
+a trustworthy hosting platform.\\
+\indent Manjaro Linux was the sixth most-popular Linux distribution between March 2015
+and March 2016 according to DistroWatch~\cite{DistroWatch}. According to our research,
+SourceForge is the only download platform recommended and offered by
+Manjaro. While downloads are available via torrent, the torrent
+links are hosted by SourceForge as well and so the original seed may be of a compromised
+image~\cite{ManjaroDownload}. We were unable to locate any alternative download mechanism.\\
+\indent This means that there is a real possibility that as of this writing, image downloads
+of Manjaro are bundled with malware. We recommend that users avoid downloading, installing
+or running Manjaro Linux until the distribution maintainers review their practices and
+provide alternatives for downloading.
 
 \section{Best Consumer Practices}
 
@@ -659,8 +674,19 @@ The conclusion goes here.
 % <OR> manually copy in the resultant .bbl file
 % set second argument of \begin to the number of references
 % (used to reserve space for the reference number labels box)
+\newcommand{\bibspace}[1] {\hskip 0.5em}
 \begin{thebibliography}{1}
 
+\bibitem{GIMPSourceForge}
+    M.~Schumacher, ``GIMP project's official statement on SourceForge's actions'',\bibspace\ Internet:\bibspace\ \url{https://mail.gnome.org/archives/gimp-developer-list/2015-May/msg00144.html}, accessed April 2016.
+\bibitem{SourceForgePolicy}
+    ``Third\bibspace\ party\bibspace\ offers\bibspace\ will\bibspace\ be\bibspace\ presented\bibspace\ with\bibspace\ opt-in\bibspace\ projects\bibspace\ only'',\bibspace\ Internet:\bibspace\ \url{https://sourceforge.net/blog/third-party-offers-will-be-presented-with-opt-in-projects-only/}, accessed April 2016.
+\bibitem{NmapSourceForge}
+    ``SourceForge hijacks the Nmap SourceForge account'',\bibspace\ Internet:\bibspace\ \url{http://seclists.org/nmap-dev/2015/q2/194}, accessed April 2016.
+\bibitem{DistroWatch}
+    ``DistroWatch\bibspace\ page\bibspace\ hit\bibspace\ ranking'',\bibspace\ Internet:\bibspace\ \url{https://distrowatch.com/dwres.php?resource=popularity}, accessed April 2016.
+\bibitem{ManjaroDownload}
+    ``Download\bibspace\ Manjaro'',\bibspace\ Internet:\bibspace\ \url{https://wiki.manjaro.org/index.php?title=Download_Manjaro}, accessed April 2016.
 \bibitem{IEEEhowto:kopka}
 H.~Kopka and P.~W. Daly, \emph{A Guide to \LaTeX}, 3rd~ed.\hskip 1em plus
   0.5em minus 0.4em\relax Harlow, England: Addison-Wesley, 1999.
