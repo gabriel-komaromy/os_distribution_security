@@ -364,7 +364,8 @@ be launched more easily against the distribution process itself, in such a way
 that users unknowingly install a modified version of the expected operating
 system. If uncaught, attacks that result in the distribution of a compromised
 operating system can be both exceedingly difficult to detect and exceedingly
-powerful in their effect. The open-source model possesses some unique
+powerful in their effect.
+The open-source model possesses some unique
 vulerabilities compared to its closed- or shared-source counterparts.
 Open-source operating systems often have much smaller core development teams
 than do the popular Windows and OS X systems. Open-source software is not
@@ -381,7 +382,47 @@ Body of text goes here\ldots
 
 \subsection{Building a Release}
 
-Body of text goes here\ldots
+The specific processes by which a new version of an operating system
+is built differ between development teams.
+Operating system developers establish their own schedule
+standardizations, though the time between starting the release process
+and the anticipated release typically takes no more than 90 days.
+Teams may implement some steps less formally than others do,
+though the general procedures are ubiquitous enough they can be
+summarized by a few key steps.
+
+\subsubsection{Changing the System}
+
+In an operating system's natural lifecycle, users tend to discover that
+the system exhibits certain unexpected behaviors.
+These bugs are reported, tracked, and hopefully fixed in code so that
+users will not experience them in future versions of the operating system.
+Users might request that entirely new features be added
+or that existing, intentional behaviors be modified.
+Even without user input, changes to the system inevitably
+originate from within the development team; design paradigms change
+and the world of security is ever-evolving.\\
+\indent No matter the cause, an operating system's codebase can change
+frequently. After enough changes are made to warrant a new release,
+or at certain milestones in a predetermined development schedule,
+developers stop making new changes in preparation for a code review.
+The most developers of different operating systems will ``freeze''
+or ``lock'' the code so that no more changes can be made.
+Before the code freeze occurs, developers finish integrating their changes
+and merge the development branch into a stable, or production, branch.
+Of course, the naming of branches varies between projects.
+Once the code is frozen, the interested public and, in almost all cases,
+an internal body begin a code review.
+
+\subsubsection{Code Review}
+
+At this time, new features are tested for proper functionality,
+and bug fixes are tested for robustness. In general, the code
+is reviewed for proper practice and adherence to in-house standards.
+A beta image is built and distributed to testers.
+As necessary minor changes are made, such as those to update documentation,
+fix remaining bugs, and address any discovered security issues,
+additional beta images will be released for testing.
 
 \subsubsection{Compiling into ISO}
 
