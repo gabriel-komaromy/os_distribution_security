@@ -244,8 +244,8 @@
 % The latest version can be found at:
 % http://www.ctan.org/pkg/dblfloatfix
 
-
-
+\usepackage{graphicx}
+\usepackage{epstopdf}
 
 % *** PDF, URL AND HYPERLINK PACKAGES ***
 %
@@ -375,14 +375,10 @@ are different from the security considerations that open-source distributors mus
 
 \ldots\textit{Add more here}\ldots
 
-\section{Distributing an Operating System}
+\section{Operating System Distribution}
 
-Body of text goes here\ldots
-
-\subsection{Building a Release}
-
-The specific processes by which a new version of an operating system
-is built differ between development teams.
+The specific process by which a new version of an operating system
+travels from developer to end user differs between development teams.
 Operating system developers establish their own schedule
 standardizations, though the time between starting the release process
 and the anticipated release typically takes no more than 90 days.
@@ -390,7 +386,7 @@ Teams may implement some steps less formally than others do,
 though the general procedures are ubiquitous enough they can be
 summarized by a few key steps.
 
-\subsubsection{Changing the System}
+\subsubsection{System Changes}
 
 In an operating system's natural lifecycle, users tend to discover that
 the system exhibits certain unexpected behaviors.
@@ -423,15 +419,25 @@ As necessary minor changes are made, such as those to update documentation,
 fix remaining bugs, and address any discovered security issues,
 additional beta images will be released for testing.
 
-\subsubsection{Compiling into ISO}
+\subsection{Release Building}
+
+Once the beta images are proven to meet quality standards,
+a branch for the new version is created.
+The most successful beta images will be included on the branch
+as ``release candidates,'' a term for beta versions of software
+that have the potential to be a finished product.
+
+\begin{figure}[h!]
+\includegraphics[width=\linewidth]{./images/FreeBSD_4.eps}
+\caption{FreeBSD's RELENG\_4 (4.x STABLE Branch)}
+\label{FreeBSD_4}
+\end{figure}
+
+\subsubsection{Pre-Distribution}
 
 Body of text goes here\ldots
 
-\subsubsection{Overseeing Release}
-
-Body of text goes here\ldots
-
-\subsection{Mirroring a Release}
+\subsection{Image Mirroring}
 
 Body of text goes here\ldots
 
