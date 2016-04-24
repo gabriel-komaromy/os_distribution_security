@@ -386,7 +386,7 @@ Teams may implement some steps less formally than others do,
 though the general procedures are ubiquitous enough they can be
 summarized by a few key steps.
 
-\subsubsection{System Changes}
+\subsection{System Changes}
 
 In an operating system's natural lifecycle, users tend to discover that
 the system exhibits certain unexpected behaviors.
@@ -409,9 +409,9 @@ Of course, the naming of branches varies between projects.
 Once the code is frozen, the interested public and, in almost all cases,
 an internal body begin a code review.
 
-\subsubsection{Code Review}
+\subsection{Code Review}
 
-At this time, new features are tested for proper functionality,
+Following the code freeze, new features are tested for proper functionality,
 and bug fixes are tested for robustness. In general, the code
 is reviewed for proper practice and adherence to in-house standards.
 A beta image is built and distributed to testers.
@@ -426,6 +426,9 @@ a branch for the new version is created.
 The most successful beta images will be included on the branch
 as ``release candidates,'' a term for beta versions of software
 that have the potential to be a finished product.
+The release candidates will undergo further stability testing furher
+Eventually, a release candidate (not necessarily the most recent) will
+be selected as the final, stable version.
 
 \begin{figure}[h!]
 \includegraphics[width=\linewidth]{./images/FreeBSD_4.eps}
@@ -433,7 +436,7 @@ that have the potential to be a finished product.
 \label{FreeBSD_4}
 \end{figure}
 
-\subsubsection{Pre-Distribution}
+\subsection{Pre-Distribution}
 
 Body of text goes here\ldots
 
