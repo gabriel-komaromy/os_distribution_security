@@ -501,6 +501,10 @@ $N$ operating systems currently implement these countermeasures, including Foo, 
 
 \textit{Visual aid goes here}
 
+\subsection{Weak Checksum Algorithms}
+Providing a signed checksum is part of the best practices for securing download mechanisms. It allows the user to verify the authenticity of the checksum. Once the user is sure that the checksum is the one that they intended to download, they can use the same checksum algorithm to generate their own hash of the downloaded image. If the downloaded checksum and the generated checksum are identical, the user can then proceed, confident that the image they downloaded is the same one that the distribution maintainers published. However, certain commonly-used checksum algorithms are no longer strong enough to reliably verify the correctness of an image.\\
+\indent The MD5 hash algorithm was~\cite{md5attack}
+
 \section{External Risks}
 
 Body of text goes here\ldots
@@ -673,36 +677,17 @@ The conclusion goes here.
 % http://mirror.ctan.org/biblio/bibtex/contrib/doc/
 % The IEEEtran BibTeX style support page is at:
 % http://www.michaelshell.org/tex/ieeetran/bibtex/
-%\bibliographystyle{IEEEtran}
+\bibliography{references.bib}
+\bibliographystyle{IEEEtran}
 % argument is your BibTeX string definitions and bibliography database(s)
 %\bibliography{IEEEabrv,../bib/paper}
 %
 % <OR> manually copy in the resultant .bbl file
 % set second argument of \begin to the number of references
 % (used to reserve space for the reference number labels box)
-\newcommand{\bibspace}[1] {\hskip 0.5em}
-\begin{thebibliography}{1}
-
-\bibitem{GIMPSourceForge}
-    M.~Schumacher, ``GIMP project's official statement on SourceForge's actions'',\bibspace\ Internet:\bibspace\ \url{https://mail.gnome.org/archives/gimp-developer-list/2015-May/msg00144.html}, accessed April 2016.
-\bibitem{SourceForgePolicy}
-    ``Third\bibspace\ party\bibspace\ offers\bibspace\ will\bibspace\ be\bibspace\ presented\bibspace\ with\bibspace\ opt-in\bibspace\ projects\bibspace\ only'',\bibspace\ Internet:\bibspace\ \url{https://sourceforge.net/blog/third-party-offers-will-be-presented-with-opt-in-projects-only/}, accessed April 2016.
-\bibitem{NmapSourceForge}
-    ``SourceForge hijacks the Nmap SourceForge account'',\bibspace\ Internet:\bibspace\ \url{http://seclists.org/nmap-dev/2015/q2/194}, accessed April 2016.
-\bibitem{DistroWatch}
-    ``DistroWatch\bibspace\ page\bibspace\ hit\bibspace\ ranking'',\bibspace\ Internet:\bibspace\ \url{https://distrowatch.com/dwres.php?resource=popularity}, accessed April 2016.
-\bibitem{ManjaroDownload}
-    ``Download\bibspace\ Manjaro'',\bibspace\ Internet:\bibspace\ \url{https://wiki.manjaro.org/index.php?title=Download_Manjaro}, accessed April 2016.
-\bibitem{IEEEhowto:kopka}
-H.~Kopka and P.~W. Daly, \emph{A Guide to \LaTeX}, 3rd~ed.\hskip 1em plus
-  0.5em minus 0.4em\relax Harlow, England: Addison-Wesley, 1999.
-
-\end{thebibliography}
-
-
-
+%\newcommand{\bibspace}[1] {\hskip 0.5em}
+%\begin{thebibliography}{1}
+%\end{thebibliography}
 
 % that's all folks
 \end{document}
-
-
