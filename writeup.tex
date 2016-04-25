@@ -373,8 +373,6 @@ The commercial interfaces that are requisite for online distribution of propriet
 software also have advantages and disadvantages in security that
 are different from the security considerations that open-source distributors must account for.
 
-\ldots\textit{Add more here}\ldots
-
 \section{Operating System Distribution}
 
 The specific process by which a new version of an operating system
@@ -469,13 +467,33 @@ and fully utilized by the public.
 The qualifications and requirements for official mirrors of operating systems
 vary by the system in question, and different areas of distribution
 differ in their own inherent requirements.
-An FTP site often represents the largest amount of data that needs
-to be mirrored; it can contain a live file system, the ISO images
-of the installation distribution, and branches or snapshots of
-checked-out source trees.
+For example, an FTP site often represents the largest amount of data
+that needs to be mirrored; it can contain a live file system,
+the ISO images of the installation distribution, and branches
+or snapshots of checked-out source trees.
+The amount of required space is also multipled
+by the number of operating system versions and architectures.\\
+\indent All operating system archives demand a certain minimum
+amount of disk space. It is one of the primary requirements of a mirror.
+The full distribution can have a size anywhere from 500 gigabytes to
+multiple terrabytes, depending on the size of operating system,
+the number of snapshots and releases to be offered, and the number of
+architectures supported. For example, at time of writing,
+the Ubuntu archive uses 912GB of disk space and FreeBSD uses 1.4TB for its FTP distribution.\\
+\indent There are a number of system requirements that depend on
+the expected number of clients. Since official mirrors are designed
+to handle large volumes of traffic, official mirrors can be required to
+meet hard standards above the inherent needs of a server.
+These standards can include minimum CPU speeds, amounts of random access
+memory, and even certain disk configurations such as RAID.\\
+\indent Finally, operating system authorities might have policies
+unrelated to hardware, such as requirements about frequency of syncronization.
+For example, FreeBSD requires that mirrors update once per day, at a minimum. Ubuntu requires that its country-level mirrors
+update every six hours for archives or every four hours for active releases.
 
 \subsubsection{Fetching Release}
 %https://help.ubuntu.com/community/Rsyncmirror
+%https://help.ubuntu.com/community/ZsyncCdImage
 
 Rsync, Zsync\ldots
 
