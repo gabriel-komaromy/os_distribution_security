@@ -424,7 +424,7 @@ additional beta images will be released for testing.
 Once the beta images are proven to meet quality standards,
 a branch for the new version is created.
 The most successful beta images will be included on the branch
-as ``release candidates,'' a term for beta versions of software
+as ``release candidates'' a term for beta versions of software
 that have the potential to be a finished product.
 The release candidates will undergo further stability testing furher
 Eventually, a release candidate (not necessarily the most recent) will
@@ -532,20 +532,60 @@ $N$ operating systems currently implement these countermeasures, including Foo, 
 \textit{Visual aid goes here}
 
 \subsection{Hash Collisions}
-Providing a signed checksum is part of the best practices for securing download mechanisms. It allows the user to verify the authenticity of the checksum. Once the user is sure that the checksum is the one that they intended to download, they can use the same checksum algorithm to generate their own hash of the downloaded image. If the downloaded checksum and the generated checksum are identical, the user can then proceed, confident that the image they downloaded is the same one that the distribution maintainers published. However, certain commonly-used checksum algorithms are no longer strong enough to reliably verify the correctness of an image.\\
-\indent Weak hashing algorithms introduce a vulnerability to the distribution process. Usually, an attacker that wishes to replace a published image also has to replace the associated published hash with the hash of the malicious image. Signed hashes alert users to this problem. If the hash of the malicious image is the same as the hash of the original image, though, the attacker does not need to replace the published hash and signing mechanisms are no longer sufficient.\\
-\indent Hash collision attacks are particularly dangerous because normal protection policies do not detect their presence, allowing a malicious image to be installed silently. There are ways to detect a successful hash collision attack: one is that the malicious image would be different upon comparison to the original published image. Another is that distributed source code can be independently built and compared to the malicious image. If the distributed source code has also been replaced, then a code review or version control logs could offer clues. However, none of these checks is part of the standard practice recommended by an distribution that we surveyed. Because of this issue, weak checksum algorithms are a very dangerous practice.\\
-\indent The MD5 hash algorithm was published in 1992 by Ronald Rivest~\cite{rivest1992md5}. Weaknesses in the algorithm were quickly discovered~\cite{md51993} and MD5 quickly dropped out of favor among the cryptographic hashing community. In 2004, a collision of the full MD5 algorithm was published~\cite{wang2004collisions}. MD5 collisions were used in proof-of-concept attacks on certificate authorities as early as 2005~\cite{md5attack}. While finding a collision that successfully installs and executes useful malicious tasks is more difficult than simply finding a collision, computing power has increased considerably since 2004 and it is not unreasonable to suspect that this capability exists in the world today.\\
-\indent Unfortunately, many of the of the distributions that we surveyed, including Mint, Ubuntu, Debian, Arch, Slackware, and Mageia offer MD5 checksums. While none of them offer only MD5, many list it as the first option. MD5 is faster than the SHA variants, and is reliable in detecting random corruption from transmission, but the time to compute a checksum using a strong hash algorithm is still negligible compared to the time to download the image on any modern hardware. We consider offering MD5 checksums a poor practice because users with minimal cryptographic background may choose to only verify using MD5 and trust that a hashing algorithm used by the distribution is secure. Replacing an image and MD5 checksum would remain undetected until a stronger algorithm was tried and the distribution maintainers were notified.\\
+
+Providing a signed checksum is part of the best practices for securing download mechanisms. It
+allows the user to verify the authenticity of the checksum. Once the user is sure that the
+checksum is the one that they intended to download, they can use the same checksum algorithm to
+generate their own hash of the downloaded image. If the downloaded checksum and the generated
+checksum are identical, the user can then proceed, confident that the image they downloaded is
+the same one that the distribution maintainers published. However, certain commonly-used
+checksum algorithms are no longer strong enough to reliably verify the correctness of an image.\\
+\indent Weak hashing algorithms introduce a vulnerability to the distribution process. Usually,
+an attacker that wishes to replace a published image also has to replace the associated
+published hash with the hash of the malicious image. Signed hashes alert users to this problem.
+If the hash of the malicious image is the same as the hash of the original image, though, the
+attacker does not need to replace the published hash and signing mechanisms are no longer
+sufficient.\\
+\indent Hash collision attacks are particularly dangerous because normal protection policies do
+not detect their presence, allowing a malicious image to be installed silently. There are ways
+to detect a successful hash collision attack: one is that the malicious image would be different
+upon comparison to the original published image. Another is that distributed source code can be
+independently built and compared to the malicious image. If the distributed source code has also
+been replaced, then a code review or version control logs could offer clues. However, none of
+these checks is part of the standard practice recommended by an distribution that we surveyed.
+Because of this issue, weak checksum algorithms are a very dangerous practice.
+\subsubsection{MD5}
+
+The MD5 hash algorithm was published in 1992 by Ronald Rivest~\cite{rivest1992md5}. Weaknesses
+in the algorithm were quickly discovered~\cite{md51993} and MD5 quickly dropped out of favor
+among the cryptographic hashing community. In 2004, a collision of the full MD5 algorithm was
+published~\cite{wang2004collisions}. MD5 collisions were used in proof-of-concept attacks on
+certificate authorities as early as 2005~\cite{md5attack}. While finding a collision that
+successfully installs and executes useful malicious tasks is more difficult than simply finding
+a collision, computing power has increased considerably since 2004 and it is not unreasonable
+to suspect that this capability exists in the world today.\\
+\indent Unfortunately, many of the of the distributions that we surveyed, including Mint,
+Ubuntu, Debian, Arch, Slackware, and Mageia, offer MD5 checksums. While none of them offer
+only MD5, many list it as the first option. MD5 is faster than the SHA variants, and is
+reliable in detecting random corruption from transmission, but the time to compute a checksum
+using a strong hash algorithm is still negligible compared to the time to download the image
+on any modern hardware. We consider offering MD5 checksums a poor practice because users with
+minimal cryptographic background may choose to only verify using MD5 and trust that a hashing
+algorithm used by the distribution is secure. Replacing an image and MD5 checksum would remain
+undetected until a stronger algorithm was tried and the distribution maintainers were notified.
 \subsubsection{Countermeasures}
-Distribution maintainers should remove MD5 checksums from their download pages and offer checksums generated by state-of-the-art algorithms. Additionally, they should compare the images offered by mirrors and their main download server to the image that they originally built on a regular basis. Users should verify downloaded images using the strongest algorithms available.
+
+Distribution maintainers should remove MD5 checksums from their download pages and offer
+checksums generated by state-of-the-art algorithms. Additionally, they should compare the
+images offered by mirrors and their main download server to the image that they originally
+built on a regular basis. Users should verify downloaded images using the strongest algorithms
+available.
+
 \section{External Risks}
 
 Body of text goes here\ldots
 
 \subsection{Re-Hosting and Ownership Hijacking}
-
-Body of text goes here\ldots
 
 \subsubsection{SourceForge}
 
@@ -566,6 +606,44 @@ image~\cite{ManjaroDownload}. We were unable to locate any alternative download 
 of Manjaro are bundled with malware. We recommend that users avoid downloading, installing
 or running Manjaro Linux until the distribution maintainers review their practices and
 provide alternatives for downloading.
+
+\section{Modern Verification Tools}
+
+\subsection{Signify}
+
+Recently, Ted Unangst, an OpenBSD developer, created \emph{signify} (\emph{sign} and
+\emph{verify}), an application for signing messages and verifying signatures. Signify is
+similar to GPG and PGP, but claims to reduce complexity and improve ease of use~\cite{signify},
+which has historically been a barrier to widespread PGP adoption~\cite{whitten1999johnny}~\cite{sheng2006johnny}.
+Signify is built on the Ed25519 elliptic curve algorithm for key exchange in the
+Diffie-Hellman protocol~\cite{signify}.
+
+\subsubsection{Key Rotation}
+To use signify to secure image verification, the distribution maintainers hold a private
+key and the end users hold a public key. The dangers to this architecture are that the
+private key could be compromised, allowing attackers to sign malicious images, or the user
+could be given the wrong public key, with the same consequence.\\
+\indent To address the problem of a compromised private key, OpenBSD now generates new
+public and private keys for each release of the distribution, which are published every
+six months~\cite{openbsdrelease}. If a private key is compromised, the attackers will be able
+to sign malicious images of that release. However, this will be useful for at most six months,
+as installation of old releases is less common.\\
+\indent Key rotation is also useful for distributing trusted public keys. Since signify was
+completed, each OpenBSD release image has included the public key for the subsequent release;
+that is, an OpenBSD 5.6 image has the public key for 5.7, 5.7 has the public key for 5.8, and
+so on. This means that once the user has a correct image installed, they will be able to
+recursively and securely download the subsequent release for as long as they wish~\cite{signify}.
+\subsubsection{Public Key Trust}
+The problem remains that the user must still use an untrusted public key when verifying the
+initial installation. The OpenBSD maintainers have chosen to create a web of trust by displaying
+the current public key wherever possible. The current keys fit in 56 base64-encoded characters,
+which is small enough to be converted into a QR code. The public key for OpenBSD 5.7 was shown
+in that format at the conference where signify was introduced. Other places where they have
+written the key include OpenBSD release CDs, \url{openbsd.org}, and Twitter~\cite{signify}.
+\subsubsection{Future}
+Signify has been ported to Linux~\cite{signifylinux}, OS X~\cite{signifyosx}, and
+Windows~\cite{signifywindows}. Because of its ease of use and support by the OpenBSD project,
+we believe that signify will gain widespread adoption for verifying releases in years to come. 
 
 \section{Best Consumer Practices}
 
