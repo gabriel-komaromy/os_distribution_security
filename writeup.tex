@@ -770,9 +770,19 @@ regarding the output of a standard part of the key verification process.
 
 Sometimes it is best to rely on proven-stable releases. It can be harmful to be on the bleeding edge of development, although it is a service to the industry.
 
-\section{Our Implementations}
+\section{Automation}
 
-Body of text goes here\ldots
+Initially, we planned to write scripts to automate our recommendations of best practices
+for several distributions. However, over the course of our research, we decided that this
+would likely have a negative impact on security. One reason for this is the fragility of
+such a script. For example, to automate downloading files from several mirrors for Fedora
+Linux, we would either have to hard-code the mirror links or scrape the HTML from the
+official mirrors list. Either of these options would be inferior to a person applying
+common sense and reasoning to the same process. Another problem is that analyzing Google
+search results is fairly easy for a person but a script would be unreliable at best.
+We posit that downloading an image for a new operating system is an infrequent and 
+important enough task that the person wishing to do so should devote their full attention
+to the task.
 
 % An example of a floating figure using the graphicx package.
 % Note that \label must occur AFTER (or within) \caption.
