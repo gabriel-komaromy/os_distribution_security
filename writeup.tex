@@ -438,17 +438,44 @@ be selected as the final, stable version.
 
 \subsection{Pre-Distribution}
 
-Body of text goes here\ldots
+Once the stable release image has been slated for distribution,
+the mirror sites must be updated to serve this new image.
+Release engineers will coordinate with the administrators of their mirror
+sites to ensure that the sites have download access to the new image and
+that the site is aware of the staged release.
+Because each mirror site may be managed by an independent administrator,
+it can take multiple days for all FTP and HTTP sites
+to reflect the new software.[FreeBSD Release doc section 4.1]
+The process of coordinating with the mirror sites is a crucial final step
+on the release team's end, so it is begun several days before
+the public release day.
+Once release day arrives, granted a given mirror site has
+the new operating system, it will announce the public availability
+of the new software.
 
 \subsection{Image Mirroring}
+%https://www.freebsd.org/doc/en_US.ISO8859-1/articles/hubs/
 
-Body of text goes here\ldots
+Administrators of mirror sites have their own tasks
+in ensuring a successful software release.
+They maintain at least one local copy of the operating system,
+ensuring that it is kept up-to-date, that its syncronization
+is error-free, and that their hosting resources are healthy
+and fully utilized by the public.
 
 \subsubsection{Mirror Qualifications}
+%https://www.freebsd.org/doc/en_US.ISO8859-1/articles/hubs/mirror-requirements.html
 
-Body of text goes here\ldots
+The qualifications and requirements for official mirrors of operating systems
+vary by the system in question, and different areas of distribution
+differ in their own inherent requirements.
+An FTP site often represents the largest amount of data that needs
+to be mirrored; it can contain a live file system, the ISO images
+of the installation distribution, and branches or snapshots of
+checked-out source trees.
 
 \subsubsection{Fetching Release}
+%https://help.ubuntu.com/community/Rsyncmirror
 
 Rsync, Zsync\ldots
 
