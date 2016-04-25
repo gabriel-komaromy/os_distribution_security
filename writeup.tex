@@ -85,11 +85,6 @@
 % When switching from latex to pdflatex and vice-versa, the compiler may
 % have to be run twice to clear warning/error messages.
 
-
-
-
-
-
 % *** CITATION PACKAGES ***
 %
 \usepackage{cite}
@@ -372,6 +367,23 @@ physical media, which is the primary distribution mechanism for Windows.
 The commercial interfaces that are requisite for online distribution of proprietary
 software also have advantages and disadvantages in security that
 are different from the security considerations that open-source distributors must account for.
+
+\subsection{Effects of Compromised Operating System}
+
+Allowing an attacker to write an arbitrary operating system that is subsequently
+installed on a server or personal computer offers an extraordinary level of
+invasion of privacy and system access. Every action that a user takes on a
+computer goes through the operating system. It would be trivial to write a logger
+for all network traffic on a computer and periodically send it to the attacker. If
+the compromised system is a web server, all information stored in the database would
+be freely available unless encrypted before it reached the server. A laptop with a
+built-in or external camera could broadcast all visible activities to an attacker.
+A keylogger could log credit cards and passwords and transmit them periodically.
+Perhaps the most likely action by an attacker would be to use the malicious
+operating system as part of a botnet, sending spam emails or carrying out denial-
+of-service attacks. While these may not directly impact the user, they have a
+negative effect on the global state of security. Great care should be taken to avoid
+the installation of compromised operating systems.
 
 \section{Operating System Distribution}
 
