@@ -681,15 +681,59 @@ choose transfer protocols, and decide what signing options are available, along 
 other considerations. The end user, though, still has agency in ensuring that the process is
 followed correctly and in maximizing their safety within the constructs that the distribution
 maintainers provide. In this section, we provide recommendations for how consumers can use
-existing mechanisms to protect themselves from attacks.
+the available options to protect themselves from attacks.
+
+\subsection{Using Existing Mechanisms}
+
+First and foremost, security can be achieved by following the download and verification steps
+recommended by the distribution maintainers, if offered. While the verification protocols
+provided are not always perfect, they are a reflection of the areas that the maintainers have
+chosen to focus on and support. An attack on a recommended protocol is also more likely to be
+discovered and reported by a third party, because other users will also tend to follow the
+recommendations if they choose to take verification steps.\\
+\indent Signing protocols such as GPG and signify should always be used if they are
+available. We do not recommend using a distribution that has taken no steps to provide
+signatures for their releases.\\
+\indent While researching the current state of this field, we came up with certain ad-hoc,
+\emph{additional} ways that users can reduce the chance of installing a compromised image.
+These methods, which we present in the remainder of this section, are not intended as a
+replacement for standard protocols and do not guarantee security even in conjunction with
+standard protocols. However, we believe that they will not interfere with the standard
+protocols and have a real chance of uncovering attacks that standard protocols fail to
+prevent.
 
 \subsection{Choosing a Protocol}
 
 Body of text goes here\ldots
 
-\subsection{Verifying Mirrors}
+\subsection{Redundancy}
 
-Body of text goes here\ldots
+\subsubsection{Mirrors}
+
+When downloading an image, a user only needs to use one mirror because that mirror is
+capable of delivering everything that they need to install the operating system. However,
+the existence of alternative mirrors offers a usually-untapped potential for improving
+security, based on the principle that it is more difficult to compromise several servers
+than to compromise one server.\\
+\indent When choosing to draw from multiple mirrors, there are
+certain practical tradeoffs to consider. From a security perspective, the optimal choice
+is to download an image and signed checksums from each mirror. Downloading
+the image could allow a user to detect a hash collision attack on an individual mirror.
+Comparing the signed checksums could alert the user to a recent public key replacement if
+the mirrors update at different intervals.\\
+\indent The improved security has to be balanced against the time spent doing the additional
+verification. Downloading a full image from each mirror would approximately multiply the
+total download time by the number of mirrors one is using. Since the network transfer time
+is often a significant bottleneck in the process of an installation, this may be a real
+impediment to usability. Weighing the costs and benefits is the responsibility of the
+individual user.
+
+\subsubsection{Hashing Algorithms}
+Another potential dimension of redundancy is to compare all provided checksum algorithms.
+An attacker finding a hash collision for SHA-256 is not completely impossible, but an image
+that has both a SHA-1 and a SHA-256 collision is even less likely. Again, such methods
+do not provide a guarantee of security, but have the potential to frustrate the efforts of
+a determined attacker.
 
 \subsection{Building a Web of Trust}
 
