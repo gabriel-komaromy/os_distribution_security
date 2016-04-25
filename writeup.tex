@@ -385,6 +385,19 @@ of-service attacks. While these may not directly impact the user, they have a
 negative effect on the global state of security. Great care should be taken to avoid
 the installation of compromised operating systems.
 
+\subsection{Conventions}
+
+In this paper, we frequently refer to installation images. These are usually~.iso
+files that can be burned to some physical media and installed on a system. Another
+way to install an open-source operating system is to build the system from source
+code. Building from source offers the advantage of being able to read code before
+building an image from it, and can be safer than directly installing an image.
+Modern operating systems, though, contain millions of lines of code and it is
+difficult or impossible for any individual or group to conduct a meaningful and
+comprehensive code review before building from source. This means that many issues
+affecting binary images also affect source code releases. Unless otherwise specified,
+when we refer to installation images, we mean that to include source releases.
+
 \section{Operating System Distribution}
 
 The specific process by which a new version of an operating system
