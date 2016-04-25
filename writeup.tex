@@ -527,7 +527,7 @@ independently built and compared to the malicious image. If the distributed sour
 been replaced, then a code review or version control logs could offer clues. However, none of
 these checks is part of the standard practice recommended by an distribution that we surveyed.
 Because of this issue, weak checksum algorithms are a very dangerous practice.
-\subsubsection{MD5}
+\subsubsection{Weak Algorithms}
 
 The MD5 hash algorithm was published in 1992 by Ronald Rivest~\cite{rivest1992md5}. Weaknesses
 in the algorithm were quickly discovered~\cite{md51993} and MD5 quickly dropped out of favor
@@ -545,7 +545,17 @@ using a strong hash algorithm is still negligible compared to the time to downlo
 on any modern hardware. We consider offering MD5 checksums a poor practice because users with
 minimal cryptographic background may choose to only verify using MD5 and trust that a hashing
 algorithm used by the distribution is secure. Replacing an image and MD5 checksum would remain
-undetected until a stronger algorithm was tried and the distribution maintainers were notified.
+undetected until a stronger algorithm was tried and the distribution maintainers were notified.\\
+\indent Recently, significant advances have been made towards collisions of the SHA-1
+algorithm, and there may be a collision of the full algorithm discovered in the near
+future~\cite{stevens2015freestart}. This has led to the planned deprecation of SHA-1
+Transport Layer Security (TLS) certificates in Google Chrome and other
+browsers~\cite{chromesha1}.\\
+\indent While an impending collision of the full SHA-1 algorithm is concerning, the
+previously-mentioned problem of finding a colliding image that executes malware is somewhat
+more difficult. For practical security purposes, using SHA-1 checksums is likely sufficient
+for the time being.
+
 \subsubsection{Countermeasures}
 
 Distribution maintainers should remove MD5 checksums from their download pages and offer
