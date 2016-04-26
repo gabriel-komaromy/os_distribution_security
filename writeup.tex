@@ -488,6 +488,10 @@ to reflect the new software.
 The process of coordinating with the mirror sites is a crucial final step
 on the release team's end, so it is begun several days before
 the public release day.
+A file enumerating the hashes for each architecture is distributed 
+alongside the ISOs themselves.
+This file is made available via the mirror site, or the hashes are displayed
+on the web page beside download hyperlinks, or both.
 Once release day arrives, granted a given mirror site has
 the new operating system, it will announce the public availability
 of the new software~\cite{freebsdftp}.
@@ -524,7 +528,7 @@ meet hard standards above the inherent needs of a server.
 These standards can include minimum CPU speeds, amounts of random access
 memory, and even certain disk configurations such as RAID.\\
 \indent Finally, operating system authorities might have policies
-unrelated to hardware, such as requirements about frequency of syncronization.
+unrelated to hardware, such as requirements about frequency of syncronization and refusal of upload connections.
 For example, FreeBSD requires that mirrors update once per day, at a minimum. Ubuntu requires that its country-level mirrors
 update every six hours for archives or every four hours for active releases.
 
@@ -566,19 +570,43 @@ needing to fetch the entire release~\cite{ubuntuzsync}.
 \subsection{Distribution Methods}
 
 Linux and BSD distros are usually offered over a variety of protocols,
-each with separate advantages and disadvantages.
+each with separate advantages and disadvantages. FTP and HTTP are very
+similar. In the present day, the efficiencies of both are intimately
+tied to TCP. The analysis of and means by which BitTorrent works are rather different. Transferring physical media is incomparable to any of
+the other protocols from a network analyst's perspective.
 
-\subsubsection{HTTP}
-
-Body of text goes here\ldots
-
-\subsubsection{FTP}
-
-Body of text goes here\ldots
+\subsubsection{FTP and HTTP}
+% Measurements and round trip times (ftp vs http)
+% http://www.isi.edu/lsam/publications/http-perf/#intro
+The File Transfer Protocol is older than HTTP and features a few
+inefficiencies that HTTP addresses. First, FTP spends three round trips
+as overhead in getting the first file and two round trips
+as overhead in getting all subsequent files.
+An FTP client will open one TCP connection with the server for control
+messages and another, separate, connection for the file transfer itself.\\
+\indent FTP is considered to be slightly slower than HTTP except
+in certain cases involving the transfer of large files,
+among which certainly are operating system ISOs. FTP transfers do not
+use encryption, although all of the operating systems covered by our
+research are offered for free and without any sort of website login, so
+in these cases, the goal is the raw binary transfer of software and so
+network sniffing is not a concern.\\
+\indent 
+The HyperText Transfer Protocol overlaps the function of FTP, having been
+developed following the latter. HTTP will always achieve the best-case
+overhead of FTP (2 round-trip-time), even upon transfer of the first
+file. It is the more responsive of the two measuring request-response
+time of small files and does not require a control channel.
+HTTP can be used over SSL (HTTPs), which is a substantial advantage over
+FTP in some cases. However, for the same reasons as above, encryption is
+not necessary for the transfer of these operating system. Indeed none of
+the operating systems covered by our research had mirrors that served
+ISO downloads over HTTPs, although the webpages themselves sometimes were.
 
 \subsubsection{BitTorrent}
 
-Body of text goes here\ldots
+% IEEE paper on BitTorrent security
+% http://gridsec.usc.edu/files/publications/IEEE-TC-Lou-Hwang-Aug24-2006.pdf
 
 \subsubsection{Physical Media}
 
