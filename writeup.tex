@@ -769,9 +769,6 @@ standard protocols. However, we believe that they will not interfere with the st
 protocols and have a real chance of uncovering attacks that standard protocols fail to
 prevent.
 
-\subsection{Choosing a Protocol}
-
-Body of text goes here\ldots
 
 \subsection{Redundancy\label{redundancy}}
 
@@ -795,12 +792,28 @@ is often a significant bottleneck in the process of an installation, this may be
 impediment to usability. Weighing the costs and benefits is the responsibility of the
 individual user.
 
+\subsubsection{Transfer Protocol}
+
+Similarly, redundancy in the transfer protocol used to download the installation image
+can be helpful. Many mirrors offer downloads over at least FTP and HTTP.\@ While these
+protocols have similar levels of security, it increases the workload of an attacker to
+compromise both protocols and so may provide a practical security benefit. Downloading
+via BitTorrent has a significantly different attack surface from FTP and HTTP, so that
+should definitely be used if it is an official option from the distribution. Ideally,
+users should try to combine at least one of HTTP and FTP with a BitTorrent download.\\
+\indent Users can
+also bias their distribution choices towards distributions that serve download links
+over HTTPs rather than HTTP, reducing the risk of falling victim to a man-in-the-middle
+attack. A BitTorrent link served over HTTPs is a very secure way to download an image,
+provided that the user verifies a sufficient number of torrent seed hosts.
+
 \subsubsection{Hashing Algorithms}
 Another potential dimension of redundancy is to compare all provided checksum algorithms.
 An attacker finding a hash collision for SHA-256 is not completely impossible, but an image
 that has both a SHA-1 and a SHA-256 collision is even less likely. Again, such methods
 do not provide a guarantee of security, but have the potential to frustrate the efforts of
 a determined attacker.
+
 
 \subsection{Building a Web of Trust}
 
