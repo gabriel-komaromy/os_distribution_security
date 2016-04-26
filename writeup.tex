@@ -396,7 +396,14 @@ Modern operating systems, though, contain millions of lines of code and it is
 difficult or impossible for any individual or group to conduct a meaningful and
 comprehensive code review before building from source. This means that many issues
 affecting binary images also affect source code releases. Unless otherwise specified,
-when we refer to installation images, we mean that to include source releases.
+when we refer to installation images, we mean that to include source releases.\\
+\indent We investigated operating systems from the Linux and BSD families. We refer to any
+member of these that is a complete operating system that publishes their own releases
+as a ``distribution'', even though this more commonly is used for Linux releases
+than BSD.\\
+\indent Similarly, we use the phrase ``open source'' to refer to any piece of
+software whose source code is publicly available and may be installed at no cost.
+This includes software whose creators prefer the term ``free software''.
 
 \section{Operating System Distribution}
 
@@ -540,7 +547,17 @@ Body of text goes here\ldots
 
 \subsubsection{Physical Media}
 
-Body of text goes here\ldots
+Some distributions, including Slackware Linux, Gentoo Linux, OpenBSD, and FreeBSD,
+have options to mail the consumer a piece of physical media containing an installation
+image. While these offers tend to have a price tag, security of items sent through mail
+is a much different issue from security of packets sent over a network. At least, physical
+mail can be an excellent redundancy measure in line with the recommendations
+in~\ref{redundancy}, particularly for corporate entities to whom a cost-covering price is
+negligible. In the United States, media sent through mail is probably more secure
+than over a computer network. Certain federal agencies have the power to open and inspect
+mail, but if such an agency is targeting an individual with replacements of images on
+mailed compact disks then that individual could soon have larger problems than a
+compromised operating system.
 
 \section{Attacks on Distribution}
 
@@ -731,7 +748,7 @@ prevent.
 
 Body of text goes here\ldots
 
-\subsection{Redundancy}
+\subsection{Redundancy\label{redundancy}}
 
 \subsubsection{Mirrors}
 
