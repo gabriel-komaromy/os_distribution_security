@@ -489,18 +489,15 @@ the new operating system, it will announce the public availability
 of the new software.
 
 \subsection{Image Mirroring}
-%https://www.freebsd.org/doc/en_US.ISO8859-1/articles/hubs/
 
 Administrators of mirror sites have their own tasks
 in ensuring a successful software release.
 They maintain at least one local copy of the operating system,
-ensuring that it is kept up-to-date, that its syncronization
+ensuring that it is kept up-to-date, that its synchronization
 is error-free, and that their hosting resources are healthy
-and fully utilized by the public.
+and fully utilized by the public~\cite{freebsdmirror}.
 
 \subsubsection{Mirror Qualifications}
-%https://www.freebsd.org/doc/en_US.ISO8859-1/articles/hubs/mirror-requirements.html
-
 The qualifications and requirements for official mirrors of operating systems
 vary by the system in question, and different areas of distribution
 differ in their own inherent requirements.
@@ -509,14 +506,14 @@ that needs to be mirrored; it can contain a live file system,
 the ISO images of the installation distribution, and branches
 or snapshots of checked-out source trees.
 The amount of required space is also multipled
-by the number of operating system versions and architectures.\\
+by the number of operating system versions and architectures~\cite{freebsdrequirements}.\\
 \indent All operating system archives demand a certain minimum
 amount of disk space. It is one of the primary requirements of a mirror.
 The full distribution can have a size anywhere from 500 gigabytes to
 multiple terrabytes, depending on the size of operating system,
 the number of snapshots and releases to be offered, and the number of
 architectures supported. For example, at time of writing,
-the Ubuntu archive uses 912GB of disk space and FreeBSD uses 1.4TB for its FTP distribution.\\
+the Ubuntu archive uses 912GB of disk space and FreeBSD uses 1.4TB for its FTP distribution~\cite{freebsdrequirements}.\\
 \indent There are a number of system requirements that depend on
 the expected number of clients. Since official mirrors are designed
 to handle large volumes of traffic, official mirrors can be required to
@@ -529,19 +526,18 @@ For example, FreeBSD requires that mirrors update once per day, at a minimum. Ub
 update every six hours for archives or every four hours for active releases.
 
 \subsubsection{Fetching Release}
-%https://help.ubuntu.com/community/Rsyncmirror
 %https://help.ubuntu.com/community/ZsyncCdImage
 
 Offering up-to-date versions of an operating system across several
 mirrors poses the task of ensuring all mirrors host the same content.
 To accomplish this task, servers commonly use specialized software that
-synchronizes files between two different systems.
+synchronizes files between two different systems.\
 rsync is a widely-used utility that functions as both a file synchronization
 and file transfer program. It minimizes network usage by implementing a
 type of delta encoding. With this utility, the operators of mirror
 servers operators can fetch a new ISO image upon release and periodically
 check for differences (deltas) between an image on the master server and
-the local copy.\\
+the local copy~\cite{ubuntursync}.\\
 \indent By default rsync compares metadata, specifically the size and modification time, of files. This comparison can be done very quickly,
 but it is not comprehensive and will not synchronize modifications that
 do not change this metadata. An alternative behavior can be invoked,
