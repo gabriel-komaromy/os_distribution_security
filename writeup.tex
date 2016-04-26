@@ -424,8 +424,8 @@ travels from developer to end user differs between development teams.
 Operating system developers establish their own schedule
 standardizations, though the time between starting the release process
 and the anticipated release typically takes no more than 90 days.
-Teams may implement some steps less formally than others do,
-though the general procedures are ubiquitous enough they can be
+Some teams may implement some steps less formally than others do,
+though the general procedures are common enough between projects they can be
 summarized by a few key steps.
 
 \subsection{System Changes}
@@ -438,27 +438,38 @@ Users might request that entirely new features be added
 or that existing, intentional behaviors be modified.
 Even without user input, changes to the system inevitably
 originate from within the development team; design paradigms change
-and the world of security is ever-evolving.\\
+and the best practices in security as well as trends in operating system design
+are ever-evolving.\\
 \indent No matter the cause, an operating system's codebase can change
 frequently. After enough changes are made to warrant a new release,
 or at certain milestones in a predetermined development schedule,
 developers stop making new changes in preparation for a code review.
-The most developers of different operating systems will ``freeze''
+Then most developers of different operating systems will ``freeze''
 or ``lock'' the code so that no more changes can be made.
 Before the code freeze occurs, developers finish integrating their changes
 and merge the development branch into a stable, or production, branch.
 Of course, the naming of branches varies between projects.
 Once the code is frozen, the interested public and, in almost all cases,
-an internal body begin a code review.
+an internal body performs a code review.
 
 \subsection{Code Review}
-Following the code freeze, new features are tested for proper functionality,
-and bug fixes are tested for robustness. In general, the code
-is reviewed for proper practice and adherence to in-house standards.
+Ideally, code is reviewed on a rolling basis
+throughout the release cycle so that reviewers have time to also deal with any new bugs
+that come up. 
+In general, the code is reviewed for proper practice and adherence to in-house standards.
+Code reviewers must be very careful, because detecting subtly inserted malicious
+code can be a hard task. Many distributions are forced to rely on trust in the
+code authors to not make deliberate mistakes, and the reviews are only deep
+enough to catch unintentional bugs.
+
+\subsection{Testing}
 A beta image is built and distributed to testers.
+New features are tested for proper functionality, and bug fixes are tested for robustness.
 As necessary minor changes are made, such as those to update documentation,
 fix remaining bugs, and address any discovered security issues,
 additional beta images will be released for testing~\cite{freebsdrelease}.
+Software development processes and schedules are well-studied and too complex to cover well in this
+paper.
 
 \subsection{Release Building}
 Once the beta images are proven to meet quality standards,
@@ -466,7 +477,7 @@ a branch for the new version is created.
 The most successful beta images will be included on the branch
 as ``release candidates'' a term for beta versions of software
 that have the potential to be a finished product.
-The release candidates will undergo further stability testing furher
+The release candidates will undergo further stability testing.
 Eventually, a release candidate (not necessarily the most recent) will
 be selected as the final, stable version~\cite{freebsdrelease}.
 
@@ -489,10 +500,10 @@ The process of coordinating with the mirror sites is a crucial final step
 on the release team's end, so it is begun several days before
 the public release day.
 A file enumerating the hashes for each architecture is distributed 
-alongside the ISOs themselves.
+alongside the installation images themselves.
 This file is made available via the mirror site, or the hashes are displayed
 on the web page beside download hyperlinks, or both.
-Once release day arrives, granted a given mirror site has
+Once release day arrives and a given mirror site has
 the new operating system, it will announce the public availability
 of the new software~\cite{freebsdftp}.
 
@@ -510,37 +521,40 @@ vary by the system in question, and different areas of distribution
 differ in their own inherent requirements.
 For example, an FTP site often represents the largest amount of data
 that needs to be mirrored; it can contain a live file system,
-the ISO images of the installation distribution, and branches
+the images of the installation distribution, and branches
 or snapshots of checked-out source trees.
-The amount of required space is also multipled
+The amount of required space is also multiplied
 by the number of operating system versions and architectures~\cite{ubuntumirror}~\cite{freebsdrequirements}.\\
 \indent All operating system archives demand a certain minimum
-amount of disk space. It is one of the primary requirements of a mirror.
+amount of disk space. Keeping the archives uncorrupted and on-disk is
+one of the primary requirements of a mirror.
 The full distribution can have a size anywhere from 500 gigabytes to
-multiple terrabytes, depending on the size of operating system,
+multiple terabytes, depending on the size of operating system,
 the number of snapshots and releases to be offered, and the number of
-architectures supported. For example, at time of writing,
+architectures supported. For example, at the time of this writing,
 the Ubuntu archive uses 912GB of disk space and FreeBSD uses 1.4TB for its FTP distribution~\cite{ubuntumirror}~\cite{freebsdrequirements}.\\
 \indent There are a number of system requirements that depend on
 the expected number of clients. Since official mirrors are designed
 to handle large volumes of traffic, official mirrors can be required to
 meet hard standards above the inherent needs of a server.
 These standards can include minimum CPU speeds, amounts of random access
-memory, and even certain disk configurations such as RAID.\\
+memory, and even certain disk configurations such as RAID~\cite{ubuntumirror}~\cite{freebsdrequirements}.\\
 \indent Finally, operating system authorities might have policies
-unrelated to hardware, such as requirements about frequency of syncronization and refusal of upload connections.
-For example, FreeBSD requires that mirrors update once per day, at a minimum. Ubuntu requires that its country-level mirrors
-update every six hours for archives or every four hours for active releases.
+unrelated to hardware, such as requirements about frequency of synchronization and refusal of upload connections. The previous
+two requirements examples of distributions attempting to set some security standards for their mirrors.
+As an example of a requirement not necessarily directly related to security, FreeBSD requires
+that mirrors update once per day, at a minimum. Ubuntu requires that its country-level mirrors
+update every six hours for archives or every four hours for active releases~\cite{ubuntumirror}~\cite{freebsdrequirements}.
 
 \subsubsection{Fetching Release}
 Offering up-to-date versions of an operating system across several
-mirrors poses the task of ensuring all mirrors host the same content.
-To accomplish this task, servers commonly use specialized software that
+mirrors presents the challenge of ensuring all mirrors host the same content.
+To accomplish this reliably, servers commonly use specialized software that
 synchronizes files between two different systems.\
 rsync is a widely-used utility that functions as both a file synchronization
 and file transfer program. It minimizes network usage by implementing a
 type of delta encoding. With this utility, the operators of mirror
-servers operators can fetch a new ISO image upon release and periodically
+servers operators can fetch a new installation image upon release and periodically
 check for differences (deltas) between an image on the master server and
 the local copy~\cite{ubuntursync}.\\
 \indent By default rsync compares metadata, specifically the size and modification time, of files. This comparison can be done very quickly,
@@ -570,38 +584,37 @@ needing to fetch the entire release~\cite{ubuntuzsync}.
 \subsection{Distribution Methods}
 
 Linux and BSD distros are usually offered over a variety of protocols,
-each with separate advantages and disadvantages. FTP and HTTP are very
+each with separate advantages and disadvantages. The File Transfer Protocol (FTP) and 
+the HyperText Transfer Protocol (HTTP) are very
 similar. In the present day, the efficiencies of both are intimately
-tied to TCP. The analysis of and means by which BitTorrent works are rather different. Transferring physical media is incomparable to any of
+tied to TCP.\@ The analysis of and means by which BitTorrent works are rather different. Transferring physical media is incomparable to any of
 the other protocols from a network analyst's perspective.
 
 \subsubsection{FTP and HTTP}
-% Measurements and round trip times (ftp vs http)
-% http://www.isi.edu/lsam/publications/http-perf/#intro
-The File Transfer Protocol is older than HTTP and features a few
+FTP is older than HTTP and features a few
 inefficiencies that HTTP addresses. First, FTP spends three round trips
 as overhead in getting the first file and two round trips
-as overhead in getting all subsequent files.
+as overhead in getting all subsequent files~.
 An FTP client will open one TCP connection with the server for control
-messages and another, separate, connection for the file transfer itself.\\
+messages and another, separate, connection for the file transfer itself~\cite{rttperf}.\\
 \indent FTP is considered to be slightly slower than HTTP except
 in certain cases involving the transfer of large files,
-among which certainly are operating system ISOs. FTP transfers do not
+among which certainly are operating system installation images. FTP transfers do not
 use encryption, although all of the operating systems covered by our
 research are offered for free and without any sort of website login, so
 in these cases, the goal is the raw binary transfer of software and so
 network sniffing is not a concern.\\
 \indent 
-The HyperText Transfer Protocol overlaps the function of FTP, having been
+HTTP overlaps the function of FTP, having been
 developed following the latter. HTTP will always achieve the best-case
 overhead of FTP (2 round-trip-time), even upon transfer of the first
 file. It is the more responsive of the two measuring request-response
-time of small files and does not require a control channel.
+time of small files and does not require a control channel~\cite{rttperf}.
 HTTP can be used over SSL (HTTPs), which is a substantial advantage over
 FTP in some cases. However, for the same reasons as above, encryption is
 not necessary for the transfer of these operating system. Indeed none of
 the operating systems covered by our research had mirrors that served
-ISO downloads over HTTPs, although the webpages themselves sometimes were.
+installation image downloads over HTTPs, although the webpages themselves sometimes were.
 
 \subsubsection{BitTorrent}
 % IEEE paper on BitTorrent security
@@ -679,12 +692,30 @@ control, which serves a malicious image.
 
 \subsubsection{Notable Usage}
 
-In February 2016, Linux Mint, the single most popular Linux distribution according to DistroWatch~\cite{DistroWatch} was the victim of a replacement attack. For part of a day, the official website FTP download link pointed to a server in Bulgaria which was serving a malicious installation image~\cite{mintblog}. In response, the distribution maintainers moved their website to HTTPs, and moved their default verification to SHA-256 and GPG rather than MD5~\cite{mintnews}.
+In February 2016, Linux Mint, the single most popular Linux distribution according to
+DistroWatch~\cite{DistroWatch} was the victim of a replacement attack. For part of a day,
+the official website FTP download link pointed to a server in Bulgaria which was serving a
+malicious installation image~\cite{mintblog}. The attack had no obvious goal, as the modified image
+did nothing overtly harmful, but Mint is
+downloaded frequently enough that a determined attacker with a well-curated malicious image could
+do serious damage to a number of systems if the same situation happened again. In response,
+the distribution maintainers moved
+their website to HTTPs, and moved their default verification to SHA-256 and GPG rather than
+MD5~\cite{mintnews}.
 
 \subsubsection{Countermeasures}
 
-The best way to prevent redirection and replacement attacks is to implement a signing protocol such as GNU Privacy Guard (GPG), or signify (discussed further in Section~\ref{signify}). GPG allows the distribution maintainers to hold a private key, which they sign checksums with. Users then verify that signature with a public key, and ensure that it matches the checksum calculated on the image that they downloaded. If GPG is implemented and used correctly, it can significantly reduce the impact even if an attacker successfully performs a redirection or replacement attack.\\
-\indent Distribution maintainers and mirror hosts can also reduce the chances of a successful redirection or replacement attack by following good operational security practices, such as segmenting the network that the master and web servers reside on, using strong passwords for the servers, etc.
+The best way to prevent redirection and replacement attacks is to implement a signing protocol
+such as GNU Privacy Guard (GPG), or signify (discussed further in Section~\ref{signify}).
+GPG allows the distribution maintainers to hold a private key, which they sign checksums with.
+Users then verify that signature with a public key, and ensure that it matches the checksum
+calculated on the image that they downloaded. If GPG is implemented and used correctly, it can
+significantly reduce the impact even if an attacker successfully performs a redirection or
+replacement attack.\\
+\indent Distribution maintainers and mirror hosts can also reduce the chances of a successful
+redirection or replacement attack by following good operational security practices, such as
+segmenting the network that the master and web servers reside on, using strong passwords for
+the servers, etc.
 
 \subsection{Hash Collisions}
 
@@ -733,10 +764,13 @@ algorithm, and there may be a collision of the full algorithm discovered in the 
 future~\cite{stevens2015freestart}. This has led to the planned deprecation of SHA-1
 Transport Layer Security (TLS) certificates in Google Chrome and other
 browsers~\cite{chromesha1}.\\
-\indent While an impending collision of the full SHA-1 algorithm is concerning, the
-previously-mentioned problem of finding a colliding image that executes malware is somewhat
-more difficult. For practical security purposes, using SHA-1 checksums is likely sufficient
-for the time being.
+\indent An impending collision of the full SHA-1 algorithm is concerning for various security
+purposes. However, using such a collision in an attack on an operating system distribution
+mechanism takes more work. Because of the previously-mentioned problem of finding a
+colliding image that successfully builds and executes malware, an attacker with a tool to generate
+collisions for a given input would have to go through a very large number of collisions before
+they encountered one that they could actually use. For practical security purposes, using SHA-1
+checksums is likely sufficient for the time being.
 
 \subsubsection{Countermeasures}
 
@@ -837,9 +871,6 @@ standard protocols. However, we believe that they will not interfere with the st
 protocols and have a real chance of uncovering attacks that standard protocols fail to
 prevent.
 
-\subsection{Choosing a Protocol}
-
-Body of text goes here\ldots
 
 \subsection{Redundancy\label{redundancy}}
 
@@ -863,12 +894,28 @@ is often a significant bottleneck in the process of an installation, this may be
 impediment to usability. Weighing the costs and benefits is the responsibility of the
 individual user.
 
+\subsubsection{Transfer Protocol}
+
+Similarly, redundancy in the transfer protocol used to download the installation image
+can be helpful. Many mirrors offer downloads over at least FTP and HTTP.\@ While these
+protocols have similar levels of security, it increases the workload of an attacker to
+compromise both protocols and so may provide a practical security benefit. Downloading
+via BitTorrent has a significantly different attack surface from FTP and HTTP, so that
+should definitely be used if it is an official option from the distribution. Ideally,
+users should try to combine at least one of HTTP and FTP with a BitTorrent download.\\
+\indent Users can
+also bias their distribution choices towards distributions that serve download links
+over HTTPs rather than HTTP, reducing the risk of falling victim to a man-in-the-middle
+attack. A BitTorrent link served over HTTPs is a very secure way to download an image,
+provided that the user verifies a sufficient number of torrent seed hosts.
+
 \subsubsection{Hashing Algorithms}
 Another potential dimension of redundancy is to compare all provided checksum algorithms.
 An attacker finding a hash collision for SHA-256 is not completely impossible, but an image
 that has both a SHA-1 and a SHA-256 collision is even less likely. Again, such methods
 do not provide a guarantee of security, but have the potential to frustrate the efforts of
 a determined attacker.
+
 
 \subsection{Building a Web of Trust}
 
@@ -917,8 +964,13 @@ for several distributions. However, over the course of our research, we decided 
 would likely have a negative impact on security. One reason for this is the fragility of
 such a script. For example, to automate downloading files from several mirrors for Fedora
 Linux, we would either have to hard-code the mirror links or scrape the HTML from the
-official mirrors list. Either of these options would be inferior to a person applying
-common sense and reasoning to the same process. Another problem is that analyzing Google
+official mirrors list. Hard-coded links would be unreliable and eventually break. Scraping
+the HTML would break when the format of the mirrors list changed. 
+Either of these options would be inferior to a person applying
+common sense and reasoning to the same process. Once we had the correct server link, we would
+also have to append a hard-coded file path that contains the release version number. The version
+number would change at the next version release and the file path could as well. Another
+problem is that analyzing Google
 search results is fairly easy for a person but a script would be unreliable at best.
 We posit that downloading an image for a new operating system is an infrequent and 
 important enough task that the person wishing to do so should devote their full attention
