@@ -85,11 +85,6 @@
 % When switching from latex to pdflatex and vice-versa, the compiler may
 % have to be run twice to clear warning/error messages.
 
-
-
-
-
-
 % *** CITATION PACKAGES ***
 %
 \usepackage{cite}
@@ -373,6 +368,43 @@ The commercial interfaces that are requisite for online distribution of propriet
 software also have advantages and disadvantages in security that
 are different from the security considerations that open-source distributors must account for.
 
+\subsection{Effects of Compromised Operating System}
+
+Allowing an attacker to write an arbitrary operating system that is subsequently
+installed on a server or personal computer offers an extraordinary level of
+invasion of privacy and system access. Every action that a user takes on a
+computer goes through the operating system. It would be trivial to write a logger
+for all network traffic on a computer and periodically send it to the attacker. If
+the compromised system is a web server, all information stored in the database would
+be freely available unless encrypted before it reached the server. A laptop with a
+built-in or external camera could broadcast all visible activities to an attacker.
+A keylogger could log credit cards and passwords and transmit them periodically.
+Perhaps the most likely action by an attacker would be to use the malicious
+operating system as part of a botnet, sending spam emails or carrying out denial-
+of-service attacks. While these may not directly impact the user, they have a
+negative effect on the global state of security. Great care should be taken to avoid
+the installation of compromised operating systems.
+
+\subsection{Conventions}
+
+In this paper, we frequently refer to installation images. These are usually~.iso
+files that can be burned to some physical media and installed on a system. Another
+way to install an open-source operating system is to build the system from source
+code. Building from source offers the advantage of being able to read code before
+building an image from it, and can be safer than directly installing an image.
+Modern operating systems, though, contain millions of lines of code and it is
+difficult or impossible for any individual or group to conduct a meaningful and
+comprehensive code review before building from source. This means that many issues
+affecting binary images also affect source code releases. Unless otherwise specified,
+when we refer to installation images, we mean that to include source releases.\\
+\indent We investigated operating systems from the Linux and BSD families. We refer to any
+member of these that is a complete operating system that publishes their own releases
+as a ``distribution'', even though this more commonly is used for Linux releases
+than BSD.\\
+\indent Similarly, we use the phrase ``open source'' to refer to any piece of
+software whose source code is publicly available and may be installed at no cost.
+This includes software whose creators prefer the term ``free software''.
+
 \section{Operating System Distribution}
 
 The specific process by which a new version of an operating system
@@ -548,7 +580,17 @@ Body of text goes here\ldots
 
 \subsubsection{Physical Media}
 
-Body of text goes here\ldots
+Some distributions, including Slackware Linux, Gentoo Linux, OpenBSD, and FreeBSD,
+have options to mail the consumer a piece of physical media containing an installation
+image. While these offers tend to have a price tag, security of items sent through mail
+is a much different issue from security of packets sent over a network. At least, physical
+mail can be an excellent redundancy measure in line with the recommendations
+in~\ref{redundancy}, particularly for corporate entities to whom a cost-covering price is
+negligible. In the United States, media sent through mail is probably more secure
+than over a computer network. Certain federal agencies have the power to open and inspect
+mail, but if such an agency is targeting an individual with replacements of images on
+mailed compact disks then that individual could soon have larger problems than a
+compromised operating system.
 
 \section{Attacks on Distribution}
 
@@ -694,7 +736,7 @@ completed, each OpenBSD release image has included the public key for the subseq
 that is, an OpenBSD 5.6 image has the public key for 5.7, 5.7 has the public key for 5.8, and
 so on. This means that once the user has a correct image installed, they will be able to
 recursively and securely download the subsequent release for as long as they wish~\cite{signify}.
-\subsubsection{Public Key Trust}
+\subsubsection{Public Key Trust\label{publickeytrust}}
 The problem remains that the user must still use an untrusted public key when verifying the
 initial installation. The OpenBSD maintainers have chosen to create a web of trust by displaying
 the current public key wherever possible. The current keys fit in 56 base64-encoded characters,
@@ -708,25 +750,119 @@ we believe that signify will gain widespread adoption for verifying releases in 
 
 \section{Best Consumer Practices}
 
+Security of distribution can be approached from two directions. Distribution
+maintainers are the focal points of the process: they write the software, build the images,
+choose transfer protocols, and decide what signing options are available, along with numerous
+other considerations. The end user, though, still has agency in ensuring that the process is
+followed correctly and in maximizing their safety within the constructs that the distribution
+maintainers provide. In this section, we provide recommendations for how consumers can use
+the available options to protect themselves from attacks.
+
+\subsection{Using Existing Mechanisms}
+
+First and foremost, security can be achieved by following the download and verification steps
+recommended by the distribution maintainers, if offered. While the verification protocols
+provided are not always perfect, they are a reflection of the areas that the maintainers have
+chosen to focus on and support. An attack on a recommended protocol is also more likely to be
+discovered and reported by a third party, because other users will also tend to follow the
+recommendations if they choose to take verification steps.\\
+\indent Signing protocols such as GPG and signify should always be used if they are
+available. We do not recommend using a distribution that has taken no steps to provide
+signatures for their releases.\\
+\indent While researching the current state of this field, we came up with certain ad-hoc,
+\emph{additional} ways that users can reduce the chance of installing a compromised image.
+These methods, which we present in the remainder of this section, are not intended as a
+replacement for standard protocols and do not guarantee security even in conjunction with
+standard protocols. However, we believe that they will not interfere with the standard
+protocols and have a real chance of uncovering attacks that standard protocols fail to
+prevent.
+
 \subsection{Choosing a Protocol}
 
 Body of text goes here\ldots
 
-\subsection{Verifying Mirrors}
+\subsection{Redundancy\label{redundancy}}
 
-Body of text goes here\ldots
+\subsubsection{Mirrors}
+
+When downloading an image, a user only needs to use one mirror because that mirror is
+capable of delivering everything that they need to install the operating system. However,
+the existence of alternative mirrors offers a usually-untapped potential for improving
+security, based on the principle that it is more difficult to compromise several servers
+than to compromise one server.\\
+\indent When choosing to draw from multiple mirrors, there are
+certain practical tradeoffs to consider. From a security perspective, the optimal choice
+is to download an image and signed checksums from each mirror. Downloading
+the image could allow a user to detect a hash collision attack on an individual mirror.
+Comparing the signed checksums could alert the user to a recent public key replacement if
+the mirrors update at different intervals.\\
+\indent The improved security has to be balanced against the time spent doing the additional
+verification. Downloading a full image from each mirror would approximately multiply the
+total download time by the number of mirrors one is using. Since the network transfer time
+is often a significant bottleneck in the process of an installation, this may be a real
+impediment to usability. Weighing the costs and benefits is the responsibility of the
+individual user.
+
+\subsubsection{Hashing Algorithms}
+Another potential dimension of redundancy is to compare all provided checksum algorithms.
+An attacker finding a hash collision for SHA-256 is not completely impossible, but an image
+that has both a SHA-1 and a SHA-256 collision is even less likely. Again, such methods
+do not provide a guarantee of security, but have the potential to frustrate the efforts of
+a determined attacker.
 
 \subsection{Building a Web of Trust}
 
-Body of text goes here\ldots
+As discussed in Section~\ref{publickeytrust}, signing protocols such as signify and GPG only
+ensure that a message was signed by the provider of a public key. For a first-time user
+of a distribution, the public key is usually taken from the distribution website.
+A conscientious user should take steps to verify the authenticity of public key beyond the
+fact that it was retrieved from an official source.\\
+\indent Public keys are often copied to places
+other than the official website. Intuitively, it is generally more difficult for an attacker
+to replace a file on the official server plus several third party servers than it is to
+replace it only on the official server. Therefore, one reasonable way to build trust in a
+key is to look it up in a search engine such as Google. For popular distributions, such
+a search commonly results in links to the official website, tutorials, non-security bug
+reports and other benign items. Older links also help to build trust because they imply
+that the provided key is the same one that has been available on the official website for
+a significant period of time. By contrast, finding no links or only links from newly-
+established websites indicates that there is a problem. For less popular distributions,
+minimal results should be expected by the search is worth performing regardless. Any recent
+news articles returned
+by the search should be thoroughly investigated, as they may provide information about an
+ongoing compromise.\\
+\indent Figure~\ref{fedora_google} shows an example of a positive search. The
+third result, titled ``CHECKSUM Warning'', initially may look suspicious but is a question
+regarding the output of a standard part of the key verification process.
+\begin{figure}[h!]
+\includegraphics[width=\linewidth]{./images/google_key.jpg}
+    \caption{Google search results for Fedora 23's public key fingerprint}
+\label{fedora_google}
+\end{figure}
 
-\subsection{``Soft'' Risk Mitigation}
 
-Sometimes it is best to rely on proven-stable releases. It can be harmful to be on the bleeding edge of development, although it is a service to the industry.
+\subsection{Patience and ``Soft'' Risk Mitigation}
 
-\section{Our Implementations}
+Many users install a new operating system immediately after it is released. We recommend
+that a security-conscious individual download the image, signed checksum and keys immediately
+and then wait for some period of time. If the image, signature or keys were replaced by an
+attack before release, then the time when it is most likely to be noticed is when people
+are looking around the new system for new features, bugs and other anomalies. After waiting,
+the user can download everything again and ensure that all the items match.
 
-Body of text goes here\ldots
+\section{Automation}
+
+Initially, we planned to write scripts to automate our recommendations of best practices
+for several distributions. However, over the course of our research, we decided that this
+would likely have a negative impact on security. One reason for this is the fragility of
+such a script. For example, to automate downloading files from several mirrors for Fedora
+Linux, we would either have to hard-code the mirror links or scrape the HTML from the
+official mirrors list. Either of these options would be inferior to a person applying
+common sense and reasoning to the same process. Another problem is that analyzing Google
+search results is fairly easy for a person but a script would be unreliable at best.
+We posit that downloading an image for a new operating system is an infrequent and 
+important enough task that the person wishing to do so should devote their full attention
+to the task.
 
 % An example of a floating figure using the graphicx package.
 % Note that \label must occur AFTER (or within) \caption.
@@ -826,10 +962,16 @@ Body of text goes here\ldots
 
 
 \section{Conclusion}
-The conclusion goes here.
 
-
-
+Image and source distribution creates an attack surface for any
+operating system. Some maintainers of open source distributions
+appear to be neglecting this issue and, in the process, exposing
+their users to potential harm. Other groups are paying attention
+and following best practices, and a few are even trying to push
+the field forward. We found ways that consumers can proactively
+protect themselves and identify distributions with signs of
+bad practices. Risk can be seriously mitigated on an individual
+level with some caution and patience.
 
 % conference papers do not normally have an appendix
 
