@@ -326,7 +326,14 @@ Cleveland, Ohio}}
 % As a general rule, do not put math, special symbols or citations
 % in the abstract
 \begin{abstract}
-The abstract goes here.
+    We investigate the issue of the security of distribution of images of
+    open-source operating systems. We review the stages in a common
+    distribution process, possible attacks on the process, and 
+    practices of individual distributions. We use work in the literature
+    on cryptographic algorithms to identify algorithms that should not be
+    used in this context. We offer guidelines for how
+    distributions can secure their distribution processes and how
+    consumers can best insulate themselves from the associated risks.
 \end{abstract}
 
 % no keywords
@@ -445,21 +452,15 @@ Once the code is frozen, the interested public and, in almost all cases,
 an internal body begin a code review.
 
 \subsection{Code Review}
-% FreeBSD release process documentation
-% https://www.freebsd.org/doc/en/articles/releng/release-proc.html
-
 Following the code freeze, new features are tested for proper functionality,
 and bug fixes are tested for robustness. In general, the code
 is reviewed for proper practice and adherence to in-house standards.
 A beta image is built and distributed to testers.
 As necessary minor changes are made, such as those to update documentation,
 fix remaining bugs, and address any discovered security issues,
-additional beta images will be released for testing.
+additional beta images will be released for testing~\cite{freebsdrelease}.
 
 \subsection{Release Building}
-% SAME AS ABOVE
-% https://www.freebsd.org/doc/en/articles/releng/release-proc.html
-
 Once the beta images are proven to meet quality standards,
 a branch for the new version is created.
 The most successful beta images will be included on the branch
@@ -467,7 +468,7 @@ as ``release candidates'' a term for beta versions of software
 that have the potential to be a finished product.
 The release candidates will undergo further stability testing furher
 Eventually, a release candidate (not necessarily the most recent) will
-be selected as the final, stable version.
+be selected as the final, stable version~\cite{freebsdrelease}.
 
 \begin{figure}[h!]
 \includegraphics[width=\linewidth]{./images/FreeBSD_4.eps}
@@ -476,9 +477,6 @@ be selected as the final, stable version.
 \end{figure}
 
 \subsection{Pre-Distribution}
-% FreeBSD FTP site documentation
-% https://www.freebsd.org/doc/en/articles/releng/distribution.html
-
 Once the stable release image has been slated for distribution,
 the mirror sites must be updated to serve this new image.
 Release engineers will coordinate with the administrators of their mirror
@@ -496,25 +494,17 @@ This file is made available via the mirror site, or the hashes are displayed
 on the web page beside download hyperlinks, or both.
 Once release day arrives, granted a given mirror site has
 the new operating system, it will announce the public availability
-of the new software.
+of the new software~\cite{freebsdftp}.
 
 \subsection{Image Mirroring}
-% FreeBSD mirroring documentation
-% https://www.freebsd.org/doc/en_US.ISO8859-1/articles/hubs/
-
 Administrators of mirror sites have their own tasks
 in ensuring a successful software release.
 They maintain at least one local copy of the operating system,
-ensuring that it is kept up-to-date, that its syncronization
+ensuring that it is kept up-to-date, that its synchronization
 is error-free, and that their hosting resources are healthy
-and fully utilized by the public.
+and fully utilized by the public~\cite{freebsdmirror}.
 
 \subsubsection{Mirror Qualifications}
-% FreeBSD qualifications
-% https://www.freebsd.org/doc/en_US.ISO8859-1/articles/hubs/mirror-requirements.html
-% Ubuntu mirror guidelines
-% https://wiki.ubuntu.com/Mirrors
-
 The qualifications and requirements for official mirrors of operating systems
 vary by the system in question, and different areas of distribution
 differ in their own inherent requirements.
@@ -523,14 +513,14 @@ that needs to be mirrored; it can contain a live file system,
 the ISO images of the installation distribution, and branches
 or snapshots of checked-out source trees.
 The amount of required space is also multipled
-by the number of operating system versions and architectures.\\
+by the number of operating system versions and architectures~\cite{ubuntumirror}~\cite{freebsdrequirements}.\\
 \indent All operating system archives demand a certain minimum
 amount of disk space. It is one of the primary requirements of a mirror.
 The full distribution can have a size anywhere from 500 gigabytes to
 multiple terrabytes, depending on the size of operating system,
 the number of snapshots and releases to be offered, and the number of
 architectures supported. For example, at time of writing,
-the Ubuntu archive uses 912GB of disk space and FreeBSD uses 1.4TB for its FTP distribution.\\
+the Ubuntu archive uses 912GB of disk space and FreeBSD uses 1.4TB for its FTP distribution~\cite{ubuntumirror}~\cite{freebsdrequirements}.\\
 \indent There are a number of system requirements that depend on
 the expected number of clients. Since official mirrors are designed
 to handle large volumes of traffic, official mirrors can be required to
@@ -543,23 +533,16 @@ For example, FreeBSD requires that mirrors update once per day, at a minimum. Ub
 update every six hours for archives or every four hours for active releases.
 
 \subsubsection{Fetching Release}
-% how rsync works
-% https://help.ubuntu.com/community/Rsyncmirror
-% https://help.ubuntu.com/community/ZsyncCdImage
-% rsync's checksum math in detail
-% https://rsync.samba.org/tech_report/node3.html
-% describes --checksum option
-% https://download.samba.org/pub/rsync/rsync.html
 Offering up-to-date versions of an operating system across several
 mirrors poses the task of ensuring all mirrors host the same content.
 To accomplish this task, servers commonly use specialized software that
-synchronizes files between two different systems.
+synchronizes files between two different systems.\
 rsync is a widely-used utility that functions as both a file synchronization
 and file transfer program. It minimizes network usage by implementing a
 type of delta encoding. With this utility, the operators of mirror
 servers operators can fetch a new ISO image upon release and periodically
 check for differences (deltas) between an image on the master server and
-the local copy.\\
+the local copy~\cite{ubuntursync}.\\
 \indent By default rsync compares metadata, specifically the size and modification time, of files. This comparison can be done very quickly,
 but it is not comprehensive and will not synchronize modifications that
 do not change this metadata. An alternative behavior can be invoked,
@@ -571,18 +554,18 @@ which will send the chunks whose rolling hashes differ from
 those computed by the calling server. If the rolling hashes match,
 the master server will compute the slower MD5 hash and compare it against
 the MD5 hash that it received from the calling server. In this way
-only parts of a file that have been modified are sent.\\
+only parts of a file that have been modified are sent~\cite{ubuntuzsync}~\cite{sambarsync}.\\
 \indent The rolling checksum has a length of 32 bits, and MD5 uses a
 length of 128 bits; combining the two yields an entropy of
 \begin{align*}
 2^{32+128}=2^{160}
 \end{align*}
 and therefore it is very unlikely that rsync will fail to detect 
-a modification. It is worth mentioning that the purpose of rsync's
+a modification~\cite{rsyncmath}. It is worth mentioning that the purpose of rsync's
 \texttt{--checksum} option is not to ensure cryptographic security but
 rather to ensure that modifications to master files---imagine those on a
 frequently changing beta image---are noticed and synchronized without
-needing to fetch the entire release.
+needing to fetch the entire release~\cite{ubuntuzsync}.
 
 \subsection{Distribution Methods}
 
@@ -641,35 +624,27 @@ compromised operating system.
 
 \section{Attacks on Distribution}
 
-Body of text goes here\ldots
+The large number of steps in the distribution process creates a large attack surface. In this
+section, we describe some of the possible attacks on the process in general terms.
 
-\subsection{``Attack One''}
+\subsection{Redirection or Replacement}
 
-Body of text goes here\ldots
-
-\subsubsection{Notable Usage}
-
-Body of text goes here\ldots
-
-\subsubsection{Countermeasures}
-
-$N$ operating systems currently implement these countermeasures, including Foo, Bar, Baz\ldots
-
-\textit{Visual aid goes here}
-
-\subsection{``Attack Two''}
-
-Body of text goes here\ldots
+All attacks, at some level, involve tricking the user into taking some action that they would
+not take if they had perfect information. Redirection and replacement attacks do this at the
+level where the user clicks on a link to download a file. In a replacement attack, the attacker
+compromises the master file transfer server or mirror, removes the existing image, and puts a
+malicious one in its place. In a redirection attack, the attacker compromises the web server
+that the user retrieves the link from and inserts a link to a file transfer server that they
+control, which serves a malicious image.
 
 \subsubsection{Notable Usage}
 
-Body of text goes here\ldots
+In February 2016, Linux Mint, the single most popular Linux distribution according to DistroWatch~\cite{DistroWatch} was the victim of a replacement attack. For part of a day, the official website FTP download link pointed to a server in Bulgaria which was serving a malicious installation image~\cite{mintblog}. In response, the distribution maintainers moved their website to HTTPs, and moved their default verification to SHA-256 and GPG rather than MD5~\cite{mintnews}.
 
 \subsubsection{Countermeasures}
 
-$N$ operating systems currently implement these countermeasures, including Foo, Bar, Baz\ldots
-
-\textit{Visual aid goes here}
+The best way to prevent redirection and replacement attacks is to implement a signing protocol such as GNU Privacy Guard (GPG), or signify (discussed further in Section~\ref{signify}). GPG allows the distribution maintainers to hold a private key, which they sign checksums with. Users then verify that signature with a public key, and ensure that it matches the checksum calculated on the image that they downloaded. If GPG is implemented and used correctly, it can significantly reduce the impact even if an attacker successfully performs a redirection or replacement attack.\\
+\indent Distribution maintainers and mirror hosts can also reduce the chances of a successful redirection or replacement attack by following good operational security practices, such as segmenting the network that the master and web servers reside on, using strong passwords for the servers, etc.
 
 \subsection{Hash Collisions}
 
@@ -733,8 +708,6 @@ available.
 
 \section{External Risks}
 
-Body of text goes here\ldots
-
 \subsection{Re-Hosting and Ownership Hijacking}
 
 \subsubsection{SourceForge}
@@ -759,7 +732,7 @@ provide alternatives for downloading.
 
 \section{Modern Verification Tools}
 
-\subsection{Signify}
+\subsection{Signify\label{signify}}
 
 Recently, Ted Unangst, an OpenBSD developer, created \emph{signify} (\emph{sign} and
 \emph{verify}), an application for signing messages and verifying signatures. Signify is
