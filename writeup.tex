@@ -591,10 +591,11 @@ tied to TCP.\@ The analysis of and means by which BitTorrent works are rather di
 the other protocols from a network analyst's perspective.
 
 \subsubsection{FTP and HTTP}
+
 FTP is older than HTTP and features a few
 inefficiencies that HTTP addresses. First, FTP spends three round trips
 as overhead in getting the first file and two round trips
-as overhead in getting all subsequent files~.
+as overhead in getting all subsequent files.
 An FTP client will open one TCP connection with the server for control
 messages and another, separate, connection for the file transfer itself~\cite{rttperf}.\\
 \indent FTP is considered to be slightly slower than HTTP except
@@ -612,9 +613,9 @@ file. It is the more responsive of the two measuring request-response
 time of small files and does not require a control channel~\cite{rttperf}.
 HTTP can be used over SSL (HTTPs), which is a substantial advantage over
 FTP in some cases. However, for the same reasons as above, encryption is
-not necessary for the transfer of these operating system. Indeed none of
+not necessary for the transfer of these operating system. We found that none of
 the operating systems covered by our research had mirrors that served
-installation image downloads over HTTPs, although the webpages themselves sometimes were.
+installation image downloads over HTTPs, although the webpages themselves sometimes were served over HTTPs.
 
 \subsubsection{BitTorrent}
 % IEEE paper on BitTorrent security
@@ -630,36 +631,36 @@ disadvantages compared to FTP/HTTP.\\
 amount of bandwidth. In the traditional model, a host uses an amount
 of bandwidth equal to the size of a hosted file---in this case
 a large ISO---multiplied by the number of times it is transferred.
-In the BitTorent model,
+In the BitTorrent model,
 the bandwidth is distributed over a large number of sources, known as
 ``seeders''; in this case, a client wishing to download the
-operating system image may do so from a dozen or more sources.\\
+operating system image may do so from a dozen or more sources~\cite{lou2006adaptive}.\\
 \indent A file transfer over BitTorrent might be completed well before 
-the same file can be transferred over HTTP. This is because a torrent
+the same file can be transferred over HTTP.\@ This is because a torrent
 is split into many parts and several parts can be downloaded at once from
 different sources. Since many connections are opened and maintained with 
 TCP during BitTorrent download, the transfer usually begins slow
 and gradually increases in speed. This is in contrast to HTTP transfers,
-which occur at a fairly steady rate.\\
+which occur at a fairly steady rate~\cite{lou2006adaptive}.\\
 \indent BitTorrent is also very resistant to the types of attacks that
 have been successful on direct download links. As previously mentioned,
 BitTorrent splits a file into small pieces, 64 KB to 2 MB in size, and
 stores the hashes and sizes of each piece in the metadata of
 the \texttt{.torrent} file.
 Whereas a standard method of hashing on an entire file is vulnerable to
-a collision if a undetectable modification is made, an attack on
+a collision if an undetectable modification is made, an attack on
 BitTorrent that relies on hash collisions would need to orchestrate
 a separate collision for each chunk without a difference in the size of 
 any torrent chunk. Due to the reliable hashes contained in the metadata
-of the torrent, content poisoning is made very difficult.\\
+of the torrent, content poisoning is made very difficult~\cite{lou2006adaptive}.\\
 \indent The most significant disadvantage to BitTorrent comes into play
 immediately following the release of a new operating system version.
 When a torrent is first created, it takes some time before the population
-of seeders can grow. If a phony \texttt{.torrent} file is created
+of seeders can grow. If a malicious \texttt{.torrent} file is created
 alongside the official release, there is a chance that the torrent
 masquerading as the official torrent will gain popularity. In this way
 distributing the responsibility of content hosting among a large unknown
-population is both a strength and a weakness.
+population is both a strength and a weakness~\cite{lou2006adaptive}.
 
 \subsubsection{Physical Media}
 
