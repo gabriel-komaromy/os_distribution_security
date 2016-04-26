@@ -589,35 +589,27 @@ compromised operating system.
 
 \section{Attacks on Distribution}
 
-Body of text goes here\ldots
+The large number of steps in the distribution process creates a large attack surface. In this
+section, we describe some of the possible attacks on the process in general terms.
 
-\subsection{``Attack One''}
+\subsection{Redirection or Replacement}
 
-Body of text goes here\ldots
-
-\subsubsection{Notable Usage}
-
-Body of text goes here\ldots
-
-\subsubsection{Countermeasures}
-
-$N$ operating systems currently implement these countermeasures, including Foo, Bar, Baz\ldots
-
-\textit{Visual aid goes here}
-
-\subsection{``Attack Two''}
-
-Body of text goes here\ldots
+All attacks, at some level, involve tricking the user into taking some action that they would
+not take if they had perfect information. Redirection and replacement attacks do this at the
+level where the user clicks on a link to download a file. In a replacement attack, the attacker
+compromises the master file transfer server or mirror, removes the existing image, and puts a
+malicious one in its place. In a redirection attack, the attacker compromises the web server
+that the user retrieves the link from and inserts a link to a file transfer server that they
+control, which serves a malicious image.
 
 \subsubsection{Notable Usage}
 
-Body of text goes here\ldots
+In February 2016, Linux Mint, the single most popular Linux distribution according to DistroWatch~\cite{DistroWatch} was the victim of a replacement attack. For part of a day, the official website FTP download link pointed to a server in Bulgaria which was serving a malicious installation image~\cite{mintblog}. In response, the distribution maintainers moved their website to HTTPs, and moved their default verification to SHA-256 and GPG rather than MD5~\cite{mintnews}.
 
 \subsubsection{Countermeasures}
 
-$N$ operating systems currently implement these countermeasures, including Foo, Bar, Baz\ldots
-
-\textit{Visual aid goes here}
+The best way to prevent redirection and replacement attacks is to implement a signing protocol such as GNU Privacy Guard (GPG), or signify (discussed further in Section~\ref{signify}). GPG allows the distribution maintainers to hold a private key, which they sign checksums with. Users then verify that signature with a public key, and ensure that it matches the checksum calculated on the image that they downloaded. If GPG is implemented and used correctly, it can significantly reduce the impact even if an attacker successfully performs a redirection or replacement attack.\\
+\indent Distribution maintainers and mirror hosts can also reduce the chances of a successful redirection or replacement attack by following good operational security practices, such as segmenting the network that the master and web servers reside on, using strong passwords for the servers, etc.
 
 \subsection{Hash Collisions}
 
@@ -681,8 +673,6 @@ available.
 
 \section{External Risks}
 
-Body of text goes here\ldots
-
 \subsection{Re-Hosting and Ownership Hijacking}
 
 \subsubsection{SourceForge}
@@ -707,7 +697,7 @@ provide alternatives for downloading.
 
 \section{Modern Verification Tools}
 
-\subsection{Signify}
+\subsection{Signify\label{signify}}
 
 Recently, Ted Unangst, an OpenBSD developer, created \emph{signify} (\emph{sign} and
 \emph{verify}), an application for signing messages and verifying signatures. Signify is
