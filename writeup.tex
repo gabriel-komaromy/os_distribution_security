@@ -572,7 +572,7 @@ needing to fetch the entire release~\cite{ubuntuzsync}.
 Linux and BSD distros are usually offered over a variety of protocols,
 each with separate advantages and disadvantages. FTP and HTTP are very
 similar. In the present day, the efficiencies of both are intimately
-tied to TCP. The analysis of and means by which BitTorrent works are rather different. Transferring physical media is incomparable to any of
+tied to TCP.\@ The analysis of and means by which BitTorrent works are rather different. Transferring physical media is incomparable to any of
 the other protocols from a network analyst's perspective.
 
 \subsubsection{FTP and HTTP}
@@ -639,12 +639,30 @@ control, which serves a malicious image.
 
 \subsubsection{Notable Usage}
 
-In February 2016, Linux Mint, the single most popular Linux distribution according to DistroWatch~\cite{DistroWatch} was the victim of a replacement attack. For part of a day, the official website FTP download link pointed to a server in Bulgaria which was serving a malicious installation image~\cite{mintblog}. In response, the distribution maintainers moved their website to HTTPs, and moved their default verification to SHA-256 and GPG rather than MD5~\cite{mintnews}.
+In February 2016, Linux Mint, the single most popular Linux distribution according to
+DistroWatch~\cite{DistroWatch} was the victim of a replacement attack. For part of a day,
+the official website FTP download link pointed to a server in Bulgaria which was serving a
+malicious installation image~\cite{mintblog}. The attack had no obvious goal, as the modified image
+did nothing overtly harmful, but Mint is
+downloaded frequently enough that a determined attacker with a well-curated malicious image could
+do serious damage to a number of systems if the same situation happened again. In response,
+the distribution maintainers moved
+their website to HTTPs, and moved their default verification to SHA-256 and GPG rather than
+MD5~\cite{mintnews}.
 
 \subsubsection{Countermeasures}
 
-The best way to prevent redirection and replacement attacks is to implement a signing protocol such as GNU Privacy Guard (GPG), or signify (discussed further in Section~\ref{signify}). GPG allows the distribution maintainers to hold a private key, which they sign checksums with. Users then verify that signature with a public key, and ensure that it matches the checksum calculated on the image that they downloaded. If GPG is implemented and used correctly, it can significantly reduce the impact even if an attacker successfully performs a redirection or replacement attack.\\
-\indent Distribution maintainers and mirror hosts can also reduce the chances of a successful redirection or replacement attack by following good operational security practices, such as segmenting the network that the master and web servers reside on, using strong passwords for the servers, etc.
+The best way to prevent redirection and replacement attacks is to implement a signing protocol
+such as GNU Privacy Guard (GPG), or signify (discussed further in Section~\ref{signify}).
+GPG allows the distribution maintainers to hold a private key, which they sign checksums with.
+Users then verify that signature with a public key, and ensure that it matches the checksum
+calculated on the image that they downloaded. If GPG is implemented and used correctly, it can
+significantly reduce the impact even if an attacker successfully performs a redirection or
+replacement attack.\\
+\indent Distribution maintainers and mirror hosts can also reduce the chances of a successful
+redirection or replacement attack by following good operational security practices, such as
+segmenting the network that the master and web servers reside on, using strong passwords for
+the servers, etc.
 
 \subsection{Hash Collisions}
 
@@ -693,10 +711,13 @@ algorithm, and there may be a collision of the full algorithm discovered in the 
 future~\cite{stevens2015freestart}. This has led to the planned deprecation of SHA-1
 Transport Layer Security (TLS) certificates in Google Chrome and other
 browsers~\cite{chromesha1}.\\
-\indent While an impending collision of the full SHA-1 algorithm is concerning, the
-previously-mentioned problem of finding a colliding image that executes malware is somewhat
-more difficult. For practical security purposes, using SHA-1 checksums is likely sufficient
-for the time being.
+\indent An impending collision of the full SHA-1 algorithm is concerning for various security
+purposes. However, using such a collision in an attack on an operating system distribution
+mechanism takes more work. Because of the previously-mentioned problem of finding a
+colliding image that successfully builds and executes malware, an attacker with a tool to generate
+collisions for a given input would have to go through a very large number of collisions before
+they encountered one that they could actually use. For practical security purposes, using SHA-1
+checksums is likely sufficient for the time being.
 
 \subsubsection{Countermeasures}
 
@@ -890,8 +911,13 @@ for several distributions. However, over the course of our research, we decided 
 would likely have a negative impact on security. One reason for this is the fragility of
 such a script. For example, to automate downloading files from several mirrors for Fedora
 Linux, we would either have to hard-code the mirror links or scrape the HTML from the
-official mirrors list. Either of these options would be inferior to a person applying
-common sense and reasoning to the same process. Another problem is that analyzing Google
+official mirrors list. Hard-coded links would be unreliable and eventually break. Scraping
+the HTML would break when the format of the mirrors list changed. 
+Either of these options would be inferior to a person applying
+common sense and reasoning to the same process. Once we had the correct server link, we would
+also have to append a hard-coded file path that contains the release version number. The version
+number would change at the next version release and the file path could as well. Another
+problem is that analyzing Google
 search results is fairly easy for a person but a script would be unreliable at best.
 We posit that downloading an image for a new operating system is an infrequent and 
 important enough task that the person wishing to do so should devote their full attention
