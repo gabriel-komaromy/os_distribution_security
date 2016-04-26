@@ -117,7 +117,7 @@
 
 % *** MATH PACKAGES ***
 %
-%\usepackage{amsmath}
+\usepackage{amsmath}
 % A popular package from the American Mathematical Society that provides
 % many useful and powerful commands for dealing with mathematics.
 %
@@ -495,11 +495,44 @@ update every six hours for archives or every four hours for active releases.
 %https://help.ubuntu.com/community/Rsyncmirror
 %https://help.ubuntu.com/community/ZsyncCdImage
 
-Rsync, Zsync\ldots
+Offering up-to-date versions of an operating system across several
+mirrors poses the task of ensuring all mirrors host the same content.
+To accomplish this task, servers commonly use specialized software that
+synchronizes files between two different systems.
+rsync is a widely-used utility that functions as both a file synchronization
+and file transfer program. It minimizes network usage by implementing a
+type of delta encoding. With this utility, the operators of mirror
+servers operators can fetch a new ISO image upon release and periodically
+check for differences (deltas) between an image on the master server and
+the local copy.\\
+\indent By default rsync compares metadata, specifically the size and modification time, of files. This comparison can be done very quickly,
+but it is not comprehensive and will not synchronize modifications that
+do not change this metadata. An alternative behavior can be invoked,
+however; calling a check with the option \texttt{--checksum} will split
+its file into chunks and compute a set of two checksums for each chunk.
+The first is a speedy rolling hash and the second is a more traditional
+MD5 hash. These sums are then passed to the master server,
+which will send the chunks whose rolling hashes differ from
+those computed by the calling server. If the rolling hashes match,
+the master server will compute the slower MD5 hash and compare it against
+the MD5 hash that it received from the calling server. In this way
+only parts of a file that have been modified are sent.\\
+\indent The rolling checksum has a length of 32 bits, and MD5 uses a
+length of 128 bits; combining the two yields an entropy of
+\begin{align*}
+2^{32+128}=2^{160}
+\end{align*}
+and therefore it is very unlikely that rsync will fail to detect 
+a modification. It is worth mentioning that the purpose of rsync's
+\texttt{--checksum} option is not to ensure cryptographic security but
+rather to ensure that modifications to master files---imagine those on a
+frequently changing beta image---are noticed and synchronized without
+needing to fetch the entire release.
 
 \subsection{Distribution Methods}
 
-Body of text goes here\ldots
+Linux and BSD distros are usually offered over a variety of protocols,
+each with separate advantages and disadvantages.
 
 \subsubsection{HTTP}
 
