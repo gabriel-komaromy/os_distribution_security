@@ -500,7 +500,7 @@ The process of coordinating with the mirror sites is a crucial final step
 on the release team's end, so it is begun several days before
 the public release day.
 A file enumerating the hashes for each architecture is distributed 
-alongside the ISOs themselves.
+alongside the installation images themselves.
 This file is made available via the mirror site, or the hashes are displayed
 on the web page beside download hyperlinks, or both.
 Once release day arrives and a given mirror site has
@@ -521,7 +521,7 @@ vary by the system in question, and different areas of distribution
 differ in their own inherent requirements.
 For example, an FTP site often represents the largest amount of data
 that needs to be mirrored; it can contain a live file system,
-the ISO images of the installation distribution, and branches
+the images of the installation distribution, and branches
 or snapshots of checked-out source trees.
 The amount of required space is also multiplied
 by the number of operating system versions and architectures~\cite{ubuntumirror}~\cite{freebsdrequirements}.\\
@@ -554,7 +554,7 @@ synchronizes files between two different systems.\
 rsync is a widely-used utility that functions as both a file synchronization
 and file transfer program. It minimizes network usage by implementing a
 type of delta encoding. With this utility, the operators of mirror
-servers operators can fetch a new ISO image upon release and periodically
+servers operators can fetch a new installation image upon release and periodically
 check for differences (deltas) between an image on the master server and
 the local copy~\cite{ubuntursync}.\\
 \indent By default rsync compares metadata, specifically the size and modification time, of files. This comparison can be done very quickly,
@@ -599,7 +599,7 @@ An FTP client will open one TCP connection with the server for control
 messages and another, separate, connection for the file transfer itself~\cite{rttperf}.\\
 \indent FTP is considered to be slightly slower than HTTP except
 in certain cases involving the transfer of large files,
-among which certainly are operating system ISOs. FTP transfers do not
+among which certainly are operating system installation images. FTP transfers do not
 use encryption, although all of the operating systems covered by our
 research are offered for free and without any sort of website login, so
 in these cases, the goal is the raw binary transfer of software and so
@@ -614,7 +614,7 @@ HTTP can be used over SSL (HTTPs), which is a substantial advantage over
 FTP in some cases. However, for the same reasons as above, encryption is
 not necessary for the transfer of these operating system. Indeed none of
 the operating systems covered by our research had mirrors that served
-ISO downloads over HTTPs, although the webpages themselves sometimes were.
+installation image downloads over HTTPs, although the webpages themselves sometimes were.
 
 \subsubsection{BitTorrent}
 
