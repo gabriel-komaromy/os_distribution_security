@@ -445,6 +445,8 @@ Once the code is frozen, the interested public and, in almost all cases,
 an internal body begin a code review.
 
 \subsection{Code Review}
+% FreeBSD release process documentation
+% https://www.freebsd.org/doc/en/articles/releng/release-proc.html
 
 Following the code freeze, new features are tested for proper functionality,
 and bug fixes are tested for robustness. In general, the code
@@ -455,6 +457,8 @@ fix remaining bugs, and address any discovered security issues,
 additional beta images will be released for testing.
 
 \subsection{Release Building}
+% SAME AS ABOVE
+% https://www.freebsd.org/doc/en/articles/releng/release-proc.html
 
 Once the beta images are proven to meet quality standards,
 a branch for the new version is created.
@@ -472,6 +476,8 @@ be selected as the final, stable version.
 \end{figure}
 
 \subsection{Pre-Distribution}
+% FreeBSD FTP site documentation
+% https://www.freebsd.org/doc/en/articles/releng/distribution.html
 
 Once the stable release image has been slated for distribution,
 the mirror sites must be updated to serve this new image.
@@ -480,7 +486,7 @@ sites to ensure that the sites have download access to the new image and
 that the site is aware of the staged release.
 Because each mirror site may be managed by an independent administrator,
 it can take multiple days for all FTP and HTTP sites
-to reflect the new software.[FreeBSD Release doc section 4.1]
+to reflect the new software.
 The process of coordinating with the mirror sites is a crucial final step
 on the release team's end, so it is begun several days before
 the public release day.
@@ -489,7 +495,6 @@ the new operating system, it will announce the public availability
 of the new software.
 
 \subsection{Image Mirroring}
-
 Administrators of mirror sites have their own tasks
 in ensuring a successful software release.
 They maintain at least one local copy of the operating system,
@@ -498,6 +503,8 @@ is error-free, and that their hosting resources are healthy
 and fully utilized by the public~\cite{freebsdmirror}.
 
 \subsubsection{Mirror Qualifications}
+% Ubuntu mirror guidelines
+% https://wiki.ubuntu.com/Mirrors
 The qualifications and requirements for official mirrors of operating systems
 vary by the system in question, and different areas of distribution
 differ in their own inherent requirements.
@@ -526,8 +533,14 @@ For example, FreeBSD requires that mirrors update once per day, at a minimum. Ub
 update every six hours for archives or every four hours for active releases.
 
 \subsubsection{Fetching Release}
-%https://help.ubuntu.com/community/ZsyncCdImage
-
+% how rsync works
+% https://help.ubuntu.com/community/Rsyncmirror
+% https://help.ubuntu.com/community/ZsyncCdImage
+% rsync's checksum math in detail
+% https://rsync.samba.org/tech_report/node3.html
+% describes --checksum option
+% https://download.samba.org/pub/rsync/rsync.html
+>>>>>>> c04b1dd24400c8df77580faa9d42952c96dcd85c
 Offering up-to-date versions of an operating system across several
 mirrors poses the task of ensuring all mirrors host the same content.
 To accomplish this task, servers commonly use specialized software that
