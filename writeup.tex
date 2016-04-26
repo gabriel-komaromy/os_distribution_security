@@ -424,8 +424,8 @@ travels from developer to end user differs between development teams.
 Operating system developers establish their own schedule
 standardizations, though the time between starting the release process
 and the anticipated release typically takes no more than 90 days.
-Teams may implement some steps less formally than others do,
-though the general procedures are ubiquitous enough they can be
+Some teams may implement some steps less formally than others do,
+though the general procedures are common enough between projects they can be
 summarized by a few key steps.
 
 \subsection{System Changes}
@@ -438,27 +438,38 @@ Users might request that entirely new features be added
 or that existing, intentional behaviors be modified.
 Even without user input, changes to the system inevitably
 originate from within the development team; design paradigms change
-and the world of security is ever-evolving.\\
+and the best practices in security as well as trends in operating system design
+are ever-evolving.\\
 \indent No matter the cause, an operating system's codebase can change
 frequently. After enough changes are made to warrant a new release,
 or at certain milestones in a predetermined development schedule,
 developers stop making new changes in preparation for a code review.
-The most developers of different operating systems will ``freeze''
+Then most developers of different operating systems will ``freeze''
 or ``lock'' the code so that no more changes can be made.
 Before the code freeze occurs, developers finish integrating their changes
 and merge the development branch into a stable, or production, branch.
 Of course, the naming of branches varies between projects.
 Once the code is frozen, the interested public and, in almost all cases,
-an internal body begin a code review.
+an internal body performs a code review.
 
 \subsection{Code Review}
-Following the code freeze, new features are tested for proper functionality,
-and bug fixes are tested for robustness. In general, the code
-is reviewed for proper practice and adherence to in-house standards.
+Ideally, code is reviewed on a rolling basis
+throughout the release cycle so that reviewers have time to also deal with any new bugs
+that come up. 
+In general, the code is reviewed for proper practice and adherence to in-house standards.
+Code reviewers must be very careful, because detecting subtly inserted malicious
+code can be a hard task. Many distributions are forced to rely on trust in the
+code authors to not make deliberate mistakes, and the reviews are only deep
+enough to catch unintentional bugs.
+
+\subsection{Testing}
 A beta image is built and distributed to testers.
+New features are tested for proper functionality, and bug fixes are tested for robustness.
 As necessary minor changes are made, such as those to update documentation,
 fix remaining bugs, and address any discovered security issues,
 additional beta images will be released for testing~\cite{freebsdrelease}.
+Software development processes and schedules are well-studied and too complex to cover well in this
+paper.
 
 \subsection{Release Building}
 Once the beta images are proven to meet quality standards,
